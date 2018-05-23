@@ -4,8 +4,10 @@ const path = require('path')
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
+require('dotenv').config();
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/ratemyinstructor');
+
+mongoose.connect(process.env.M_URI);
 let db = mongoose.connection;
 
 //check connection
@@ -13,8 +15,8 @@ db.once('open', function(){
   console.log('Connected to MongoDB')
 })
 //check for db errors 
-db.on('error', function(){
-  console.log(err)
+db.on('error', function(error){
+  console.log(error)
 })
 
 app.use(morgan('dev'));

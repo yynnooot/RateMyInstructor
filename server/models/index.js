@@ -1,9 +1,12 @@
-const Review = require('./review')
+const Review = require('./review');
 const User = require('./user');
-const Instructor = require('./Instructor')
+const Instructor = require('./Instructor');
+const School = require('./School');
+
 
 module.exports = {
   Review,
   User,
-  Instructor
+  Instructor,
+  School
 }
