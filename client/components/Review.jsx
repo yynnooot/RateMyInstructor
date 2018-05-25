@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { getAllReviewsThunk } from '../redux/reviews';
 
-class Review extends Component{
+export class Review extends Component{
   constructor(){
     super()
     this.state = {

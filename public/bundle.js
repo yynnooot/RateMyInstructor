@@ -162,25 +162,27 @@ var Form = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this));
 
-    _this.state = {};
+    _this.state = {
+      rating: ''
+    };
+    _this.handleChange = _this.handleChange.bind(_this);
     return _this;
   }
 
   _createClass(Form, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      this.setState({ rating: e.target.value });
+    }
+  }, {
     key: 'onSubmit',
     value: function onSubmit(e) {
       e.preventDefault();
-      var title = e.target.title.value;
-      var content = e.target.content.value;
-      var status = e.target.status.value;
-      var date = e.target.date.value;
-      var review = {
-        title: title,
-        content: content,
-        date: date,
-        status: status
-      };
-      this.props.addReview(review);
+      var rating = this.state.rating;
+      // const review = {
+      //   rating
+      // }
+      this.props.addReview({ rating: rating });
     }
   }, {
     key: 'render',
@@ -206,39 +208,42 @@ var Form = function (_Component) {
             _react2.default.createElement(
               'label',
               null,
-              'Title'
+              'Rating:'
             ),
-            _react2.default.createElement('input', { type: 'text', name: 'title', required: true })
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
             _react2.default.createElement(
-              'label',
-              null,
-              'Content'
-            ),
-            _react2.default.createElement('input', { type: 'text', name: 'content', required: true })
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(
-              'label',
-              null,
-              'Status'
-            ),
-            _react2.default.createElement('input', { type: 'text', name: 'status', required: true })
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(
-              'label',
-              null,
-              'Date'
-            ),
-            _react2.default.createElement('textarea', { name: 'date', required: true })
+              'select',
+              { value: this.state.rating, onChange: this.handleChange },
+              _react2.default.createElement(
+                'option',
+                { value: '0' },
+                '0'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '1' },
+                '1'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '2' },
+                '2'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '3' },
+                '3'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '4' },
+                '4'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '5' },
+                '5'
+              )
+            )
           ),
           _react2.default.createElement('input', { type: 'submit', value: 'Send' })
         )

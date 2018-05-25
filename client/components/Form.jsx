@@ -7,22 +7,21 @@ class Form extends Component {
   constructor(){
     super();
     this.state = {
-
+      rating: ''
     }
+    this.handleChange = this.handleChange.bind(this)
   }
+  handleChange(e){
+    this.setState({rating: e.target.value});
+  }
+
   onSubmit(e){
     e.preventDefault();
-    const title = e.target.title.value;
-    const content = e.target.content.value;
-    const status = e.target.status.value;
-    const date = e.target.date.value;
-    const review = {
-      title,
-      content,
-      date,
-      status
-    }
-    this.props.addReview(review)
+    const rating = this.state.rating;
+    // const review = {
+    //   rating
+    // }
+    this.props.addReview({rating})
   }
   render(){
     return(
@@ -30,23 +29,16 @@ class Form extends Component {
         <h1>FORM</h1>
         <form onSubmit={(event)=> this.onSubmit(event)} id="form">
           <div>
-            <label>Title</label>
-            <input type="text" name="title" required/>
-          </div>
-            
-          <div>
-            <label>Content</label>
-            <input type="text" name="content" required/>
-          </div>
-            
-          <div>
-            <label>Status</label>
-            <input type="text" name="status" required/>
-          </div>
-          
-          <div>
-            <label>Date</label>
-            <textarea name="date" required></textarea>
+            <label>Rating:</label>
+            <select value={this.state.rating} onChange={this.handleChange}>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            {/* <input type="text" name="rating" required/> */}
           </div>
 
           <input type="submit" value="Send"/>
