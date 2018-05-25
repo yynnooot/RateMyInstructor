@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 
-import Form from './Form.jsx';
+import ReviewForm from './ReviewForm.jsx';
 import Review from './Review.jsx';
 
 const Root = () => 
@@ -10,7 +10,7 @@ const Root = () =>
       <div>
         <h1>HELLO FROM ROOT</h1>
       </div>
-      <Form /> 
+      <ReviewForm /> 
       <Review /> 
     </div>
   )

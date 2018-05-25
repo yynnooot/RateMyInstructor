@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 
 import { addReviewThunk } from '../redux/reviews';
 
-class Form extends Component {
-  constructor(){
-    super();
+class ReviewForm extends Component {
+  constructor(props){
+    super(props);
     this.state = {
       rating: ''
     }
     this.handleChange = this.handleChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
   handleChange(e){
     this.setState({rating: e.target.value});
@@ -27,7 +28,7 @@ class Form extends Component {
     return(
       <div>
         <h1>FORM</h1>
-        <form onSubmit={(event)=> this.onSubmit(event)} id="form">
+        <form onSubmit={this.onSubmit} id="form">
           <div>
             <label>Rating:</label>
             <select value={this.state.rating} onChange={this.handleChange}>
@@ -51,4 +52,4 @@ class Form extends Component {
 const mapDispatch = (dispatch) => ({
   addReview: (review) => dispatch(addReviewThunk(review))
 })
-export default connect(null, mapDispatch)(Form)
+export default connect(null, mapDispatch)(ReviewForm)

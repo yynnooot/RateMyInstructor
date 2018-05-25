@@ -157,15 +157,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Form = function (_Component) {
   _inherits(Form, _Component);
 
-  function Form() {
+  function Form(props) {
     _classCallCheck(this, Form);
 
-    var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this));
+    var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
 
     _this.state = {
       rating: ''
     };
     _this.handleChange = _this.handleChange.bind(_this);
+    _this.onSubmit = _this.onSubmit.bind(_this);
     return _this;
   }
 
@@ -187,8 +188,6 @@ var Form = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       return _react2.default.createElement(
         'div',
         null,
@@ -199,9 +198,7 @@ var Form = function (_Component) {
         ),
         _react2.default.createElement(
           'form',
-          { onSubmit: function onSubmit(event) {
-              return _this2.onSubmit(event);
-            }, id: 'form' },
+          { onSubmit: this.onSubmit, id: 'form' },
           _react2.default.createElement(
             'div',
             null,
@@ -330,7 +327,7 @@ var Review = exports.Review = function (_Component) {
           return _react2.default.createElement(
             'h3',
             { key: index },
-            review.title
+            review.rating
           );
         }) : null
       );

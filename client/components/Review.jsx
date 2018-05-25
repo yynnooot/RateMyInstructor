@@ -16,7 +16,7 @@ export class Review extends Component{
     return (
       <div>
         <h1>Review</h1>
-        {this.props.reviews.length > 0 ? this.props.reviews.map((review, index) => <h3 key={index}>{review.title}</h3>)
+        {this.props.reviews.length > 0 ? this.props.reviews.map((review, index) => <h3 key={index}>{review.rating}</h3>)
         : null}
       </div>
     )
