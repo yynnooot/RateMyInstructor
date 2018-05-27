@@ -3,6 +3,8 @@ const app = express();
 const path = require('path')
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const passport = require('passport');
 
 require('dotenv').config();
 const mongoose = require('mongoose')
@@ -25,6 +27,20 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(session({
+  secret: 'hotsauce',
+  resave: false,
+  saveUnitialized: false
+}))
+// session object on every HTTP request
+app.use(function (req, res, next) {
+  console.log('session', req.session);
+  next();
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/api', require('./api')); // matches all requests to /api
 

@@ -41,7 +41,12 @@ class ReviewForm extends Component {
             </select>
             {/* <input type="text" name="rating" required/> */}
           </div>
-
+          <a
+              target="_self"
+              href="/api/auth/linkedin"
+              className="">
+              <span>Linkedin</span>
+            </a>
           <input type="submit" value="Send"/>
           </form>
       </div>

@@ -1,6 +1,5 @@
 const router = require('express').Router();
 
-
 const passport = require('passport')
 const LinkedinStrategy = require('passport-linkedin-oauth2').Strategy;
 
@@ -24,25 +23,27 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new LinkedinStrategy({
   clientID:     LINKEDIN_CLIENT_ID,
   clientSecret: LINKEDIN_CLIENT_SECRET,
-  callbackURL:  'http://127.0.0.1:1337/api/auth/linkedin/callback',
+  callbackURL:  'http://127.0.0.1:3000/api/auth/linkedin/callback',
   scope:        [ 'r_basicprofile', 'r_emailaddress'],
   passReqToCallback: true
 },
 function(req, accessToken, refreshToken, profile, done) {
   // asynchronous verification, for effect...
   req.session.accessToken = accessToken;
+  
   process.nextTick(function () {
     // To keep the example simple, the user's Linkedin profile is returned to
     // represent the logged-in user.  In a typical application, you would want
     // to associate the Linkedin account with a user record in your database,
     // and return that user instead.
-      console.log('____________THIS IS PROFILE:', profile)
+      console.log('____________THIS IS PROFILE2:', profile)
       return done(null, profile);
     });
   }
 ));
 
 // .../api/auth
+
 router.get('/', (req,res,next) => {
   console.log('HIT________________________________')
   res.json('HELLO')
@@ -56,18 +57,14 @@ router.get('/linkedin',
 
 // GET /auth/linkedin/callback
 //   Use passport.authenticate() as route middleware to authenticate the
-//   request.  If authentication fails, the user will be redirected back to the
+//   request.  If authentickation fails, the user will be redirected back to the
 //   login page.  Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
 router.get('/linkedin/callback',
   passport.authenticate('linkedin', {
     successRedirect: '/',
-    failureRedirect: '/login'
+    failureRedirect: '/'
   })
 );
-  // ,
-  // function(req, res) {
-  //   res.redirect('/');
-  // });
 
 module.exports = router;

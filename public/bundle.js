@@ -122,146 +122,6 @@ _reactDom2.default.render(_react2.default.createElement(
 
 /***/ }),
 
-/***/ "./client/components/Form.jsx":
-/*!************************************!*\
-  !*** ./client/components/Form.jsx ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-
-var _reviews = __webpack_require__(/*! ../redux/reviews */ "./client/redux/reviews.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Form = function (_Component) {
-  _inherits(Form, _Component);
-
-  function Form(props) {
-    _classCallCheck(this, Form);
-
-    var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
-
-    _this.state = {
-      rating: ''
-    };
-    _this.handleChange = _this.handleChange.bind(_this);
-    _this.onSubmit = _this.onSubmit.bind(_this);
-    return _this;
-  }
-
-  _createClass(Form, [{
-    key: 'handleChange',
-    value: function handleChange(e) {
-      this.setState({ rating: e.target.value });
-    }
-  }, {
-    key: 'onSubmit',
-    value: function onSubmit(e) {
-      e.preventDefault();
-      var rating = this.state.rating;
-      // const review = {
-      //   rating
-      // }
-      this.props.addReview({ rating: rating });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'h1',
-          null,
-          'FORM'
-        ),
-        _react2.default.createElement(
-          'form',
-          { onSubmit: this.onSubmit, id: 'form' },
-          _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(
-              'label',
-              null,
-              'Rating:'
-            ),
-            _react2.default.createElement(
-              'select',
-              { value: this.state.rating, onChange: this.handleChange },
-              _react2.default.createElement(
-                'option',
-                { value: '0' },
-                '0'
-              ),
-              _react2.default.createElement(
-                'option',
-                { value: '1' },
-                '1'
-              ),
-              _react2.default.createElement(
-                'option',
-                { value: '2' },
-                '2'
-              ),
-              _react2.default.createElement(
-                'option',
-                { value: '3' },
-                '3'
-              ),
-              _react2.default.createElement(
-                'option',
-                { value: '4' },
-                '4'
-              ),
-              _react2.default.createElement(
-                'option',
-                { value: '5' },
-                '5'
-              )
-            )
-          ),
-          _react2.default.createElement('input', { type: 'submit', value: 'Send' })
-        )
-      );
-    }
-  }]);
-
-  return Form;
-}(_react.Component);
-
-var mapDispatch = function mapDispatch(dispatch) {
-  return {
-    addReview: function addReview(review) {
-      return dispatch((0, _reviews.addReviewThunk)(review));
-    }
-  };
-};
-exports.default = (0, _reactRedux.connect)(null, mapDispatch)(Form);
-
-/***/ }),
-
 /***/ "./client/components/Review.jsx":
 /*!**************************************!*\
   !*** ./client/components/Review.jsx ***!
@@ -353,6 +213,158 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(Review);
 
 /***/ }),
 
+/***/ "./client/components/ReviewForm.jsx":
+/*!******************************************!*\
+  !*** ./client/components/ReviewForm.jsx ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _reviews = __webpack_require__(/*! ../redux/reviews */ "./client/redux/reviews.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ReviewForm = function (_Component) {
+  _inherits(ReviewForm, _Component);
+
+  function ReviewForm(props) {
+    _classCallCheck(this, ReviewForm);
+
+    var _this = _possibleConstructorReturn(this, (ReviewForm.__proto__ || Object.getPrototypeOf(ReviewForm)).call(this, props));
+
+    _this.state = {
+      rating: ''
+    };
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.onSubmit = _this.onSubmit.bind(_this);
+    return _this;
+  }
+
+  _createClass(ReviewForm, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      this.setState({ rating: e.target.value });
+    }
+  }, {
+    key: 'onSubmit',
+    value: function onSubmit(e) {
+      e.preventDefault();
+      var rating = this.state.rating;
+      // const review = {
+      //   rating
+      // }
+      this.props.addReview({ rating: rating });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h1',
+          null,
+          'FORM'
+        ),
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.onSubmit, id: 'form' },
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'label',
+              null,
+              'Rating:'
+            ),
+            _react2.default.createElement(
+              'select',
+              { value: this.state.rating, onChange: this.handleChange },
+              _react2.default.createElement(
+                'option',
+                { value: '0' },
+                '0'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '1' },
+                '1'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '2' },
+                '2'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '3' },
+                '3'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '4' },
+                '4'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '5' },
+                '5'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'a',
+            {
+              target: '_self',
+              href: '/api/auth/linkedin',
+              className: '' },
+            _react2.default.createElement(
+              'span',
+              null,
+              'Linkedin'
+            )
+          ),
+          _react2.default.createElement('input', { type: 'submit', value: 'Send' })
+        )
+      );
+    }
+  }]);
+
+  return ReviewForm;
+}(_react.Component);
+
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    addReview: function addReview(review) {
+      return dispatch((0, _reviews.addReviewThunk)(review));
+    }
+  };
+};
+exports.default = (0, _reactRedux.connect)(null, mapDispatch)(ReviewForm);
+
+/***/ }),
+
 /***/ "./client/components/Root.jsx":
 /*!************************************!*\
   !*** ./client/components/Root.jsx ***!
@@ -373,9 +385,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
-var _Form = __webpack_require__(/*! ./Form.jsx */ "./client/components/Form.jsx");
+var _ReviewForm = __webpack_require__(/*! ./ReviewForm.jsx */ "./client/components/ReviewForm.jsx");
 
-var _Form2 = _interopRequireDefault(_Form);
+var _ReviewForm2 = _interopRequireDefault(_ReviewForm);
 
 var _Review = __webpack_require__(/*! ./Review.jsx */ "./client/components/Review.jsx");
 
@@ -396,7 +408,7 @@ var Root = function Root() {
         'HELLO FROM ROOT'
       )
     ),
-    _react2.default.createElement(_Form2.default, null),
+    _react2.default.createElement(_ReviewForm2.default, null),
     _react2.default.createElement(_Review2.default, null)
   );
 };
