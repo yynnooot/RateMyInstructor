@@ -5,8 +5,9 @@ const LinkedinStrategy = require('passport-linkedin-oauth2').Strategy;
 
 require('dotenv').config();
 
-var LINKEDIN_CLIENT_ID = process.env.clientId;
-var LINKEDIN_CLIENT_SECRET = process.env.clientSecret;
+const LINKEDIN_CLIENT_ID = process.env.clientId;
+const LINKEDIN_CLIENT_SECRET = process.env.clientSecret;
+const CALLBACK_URL = process.env.callbackURL;
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -23,7 +24,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new LinkedinStrategy({
   clientID:     LINKEDIN_CLIENT_ID,
   clientSecret: LINKEDIN_CLIENT_SECRET,
-  callbackURL:  'http://127.0.0.1:3000/api/auth/linkedin/callback',
+  callbackURL:  CALLBACK_URL,
   scope:        [ 'r_basicprofile', 'r_emailaddress'],
   passReqToCallback: true
 },
@@ -36,7 +37,9 @@ function(req, accessToken, refreshToken, profile, done) {
     // represent the logged-in user.  In a typical application, you would want
     // to associate the Linkedin account with a user record in your database,
     // and return that user instead.
-      console.log('____________THIS IS PROFILE2:', profile)
+      const { formattedName, emailAddress, id } = profile._json
+      console.log('____________THIS IS PROFILE2:', profile._json)
+
       return done(null, profile);
     });
   }

@@ -5,7 +5,8 @@ const userSchema = new mongoose.Schema({
   name: {type: String, required: true},
   email: {type: String, required: true},
   linkedinID: {type: String, required: true, unique: true},
-  school: {type: String, required: true},
+  linkedinUrl: {type: String, required: true},
+  school: {type: String},
   verified: {type: Boolean, default: false}
 });
 
