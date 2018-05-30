@@ -3,6 +3,8 @@ const router = require('express').Router();
 const passport = require('passport')
 const LinkedinStrategy = require('passport-linkedin-oauth2').Strategy;
 
+const { User } = require('../models');
+
 require('dotenv').config();
 
 const LINKEDIN_CLIENT_ID = process.env.clientId;
@@ -37,8 +39,14 @@ function(req, accessToken, refreshToken, profile, done) {
     // represent the logged-in user.  In a typical application, you would want
     // to associate the Linkedin account with a user record in your database,
     // and return that user instead.
-      const { formattedName, emailAddress, id } = profile._json
-      console.log('____________THIS IS PROFILE2:', profile._json)
+      const { formattedName, emailAddress, id, publicProfileUrl } = profile._json
+      const props = {
+        name: formattedName,
+        email: emailAddress,
+        linkedinId: id,
+        linkedinUrl: publicProfileUrl
+      }
+      User.findOrCreate(props).then(user => console.log(user))
 
       return done(null, profile);
     });
