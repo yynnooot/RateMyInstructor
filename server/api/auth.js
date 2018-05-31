@@ -46,7 +46,7 @@ function(req, accessToken, refreshToken, profile, done) {
         linkedinId: id,
         linkedinUrl: publicProfileUrl
       }
-      User.findOrCreate(props).then(user => console.log(user))
+      User.findOrCreate(props).then(user => console.log('this is user:',user))
 
       return done(null, profile);
     });

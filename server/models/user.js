@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
   linkedinId: {type: String, required: true, unique: true},
   linkedinUrl: {type: String, required: true},
   school: {type: String},
-  verified: {type: Boolean, default: false}
+  verified: {type: Boolean, default: false},
+  reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}]
 });
 
 userSchema.statics.findOrCreate = function(props) {
