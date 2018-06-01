@@ -13,7 +13,12 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) { 
-  const newReview = new Review(req.body)
+  console.log('___________req.session',req.session)
+  const newReview = new Review({
+    rating: req.body.rating,
+    author: req.session.userId,
+    // instructor: '12345'
+  })
   newReview.save()
   .then(review => {
     res.json(review)

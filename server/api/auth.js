@@ -33,7 +33,7 @@ passport.use(new LinkedinStrategy({
 function(req, accessToken, refreshToken, profile, done) {
   // asynchronous verification, for effect...
   req.session.accessToken = accessToken;
-  
+  console.log()
   process.nextTick(function () {
     // To keep the example simple, the user's Linkedin profile is returned to
     // represent the logged-in user.  In a typical application, you would want
@@ -46,7 +46,12 @@ function(req, accessToken, refreshToken, profile, done) {
         linkedinId: id,
         linkedinUrl: publicProfileUrl
       }
-      User.findOrCreate(props).then(user => console.log('this is user:',user))
+      User.findOrCreate(props).then(user => {
+        // console.log('this is userID))))))))):',user.id)
+        req.session.userId = user._id
+        // console.log('NEW SESSION:', req.session)
+      })
+
 
       return done(null, profile);
     });
