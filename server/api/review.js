@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) { 
-  console.log('___________req.session',req.session)
+  console.log('POST___________req.session',req.session)
   const newReview = new Review({
     rating: req.body.rating,
     author: req.session.userId,

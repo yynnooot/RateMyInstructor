@@ -35,7 +35,7 @@ app.use(session({
 }))
 // session object on every HTTP request
 app.use(function (req, res, next) {
-  console.log('session', req.session);
+  //console.log('session', req.session);
   next();
 });
 

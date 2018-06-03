@@ -47,9 +47,10 @@ function(req, accessToken, refreshToken, profile, done) {
         linkedinUrl: publicProfileUrl
       }
       User.findOrCreate(props).then(user => {
-        // console.log('this is userID))))))))):',user.id)
-        req.session.userId = user._id
-        // console.log('NEW SESSION:', req.session)
+        //console.log('this is userID))))))))):',user.id)
+        req.session.userId = user.id
+        req.session.save();
+        console.log('______NEW SESSION FINDORCREATE:', req.session)
       })
 
 
