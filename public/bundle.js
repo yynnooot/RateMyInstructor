@@ -122,6 +122,133 @@ _reactDom2.default.render(_react2.default.createElement(
 
 /***/ }),
 
+/***/ "./client/components/InstructorForm.jsx":
+/*!**********************************************!*\
+  !*** ./client/components/InstructorForm.jsx ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var InstructorForm = function (_Component) {
+  _inherits(InstructorForm, _Component);
+
+  function InstructorForm(props) {
+    _classCallCheck(this, InstructorForm);
+
+    var _this = _possibleConstructorReturn(this, (InstructorForm.__proto__ || Object.getPrototypeOf(InstructorForm)).call(this, props));
+
+    _this.state = {
+      firstName: '',
+      lastName: '',
+      school: ''
+    };
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.onSubmit = _this.onSubmit.bind(_this);
+    return _this;
+  }
+
+  _createClass(InstructorForm, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      var name = e.target.name;
+      var value = e.target.value;
+
+      this.setState({ name: value });
+    }
+  }, {
+    key: 'onSubmit',
+    value: function onSubmit(e) {
+      e.preventDefault();
+
+      this.props.addReview({ rating: rating });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h1',
+          null,
+          'Add Instructor Form'
+        ),
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.onSubmit, id: 'form' },
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'label',
+              null,
+              'First Name:'
+            ),
+            _react2.default.createElement('input', {
+              name: 'firstName',
+              type: 'text',
+              value: this.state.firstName,
+              onChange: this.handleChange }),
+            _react2.default.createElement(
+              'label',
+              null,
+              'Last Name:'
+            ),
+            _react2.default.createElement('input', {
+              name: 'lastName',
+              type: 'text',
+              value: this.state.lastName,
+              onChange: this.handleChange }),
+            _react2.default.createElement(
+              'label',
+              null,
+              'School:'
+            ),
+            _react2.default.createElement('input', {
+              name: 'school',
+              type: 'text',
+              value: this.state.school,
+              onChange: this.handleChange })
+          ),
+          _react2.default.createElement('input', { type: 'submit', value: 'Add Instructor' })
+        )
+      );
+    }
+  }]);
+
+  return InstructorForm;
+}(_react.Component);
+
+var mapDispatch = function mapDispatch(dispatch) {
+  return {};
+};
+exports.default = (0, _reactRedux.connect)(null, mapDispatch)(InstructorForm);
+
+/***/ }),
+
 /***/ "./client/components/Review.jsx":
 /*!**************************************!*\
   !*** ./client/components/Review.jsx ***!
@@ -271,9 +398,6 @@ var ReviewForm = function (_Component) {
     value: function onSubmit(e) {
       e.preventDefault();
       var rating = this.state.rating;
-      // const review = {
-      //   rating
-      // }
       this.props.addReview({ rating: rating });
     }
   }, {
@@ -393,23 +517,19 @@ var _Review = __webpack_require__(/*! ./Review.jsx */ "./client/components/Revie
 
 var _Review2 = _interopRequireDefault(_Review);
 
+var _InstructorForm = __webpack_require__(/*! ./InstructorForm.jsx */ "./client/components/InstructorForm.jsx");
+
+var _InstructorForm2 = _interopRequireDefault(_InstructorForm);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Root = function Root() {
   return _react2.default.createElement(
     'div',
     null,
-    _react2.default.createElement(
-      'div',
-      null,
-      _react2.default.createElement(
-        'h1',
-        null,
-        'HELLO FROM ROOT'
-      )
-    ),
     _react2.default.createElement(_ReviewForm2.default, null),
-    _react2.default.createElement(_Review2.default, null)
+    _react2.default.createElement(_Review2.default, null),
+    _react2.default.createElement(_InstructorForm2.default, null)
   );
 };
 

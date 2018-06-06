@@ -11,7 +11,7 @@ const reviewSchema = new mongoose.Schema({
   status: {type: String, enum: ['pending','approved'], default: 'pending'},
   date: {type: Date, default: Date.now },
   author: {type: Schema.Types.ObjectId, ref: 'User'},
-  // instructor: {type: Schema.Types.ObjectId, ref: 'Instructor'}
+  instructor: {type: Schema.Types.ObjectId, ref: 'Instructor'}
 });
 
 const Review = mongoose.model('Review', reviewSchema);

@@ -19,9 +19,6 @@ class ReviewForm extends Component {
   onSubmit(e){
     e.preventDefault();
     const rating = this.state.rating;
-    // const review = {
-    //   rating
-    // }
     this.props.addReview({rating})
   }
   render(){
