@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-export class InstructorPage extends Component{
+class InstructorPage extends Component{
   constructor(){
     super()
     this.state = {
@@ -16,5 +16,11 @@ export class InstructorPage extends Component{
     )
   }
 }
+const mapState = () => ({
 
+})
+
+const mapDispatch = () => ({
+
+})
 export default connect(mapState, mapDispatch)(InstructorPage);

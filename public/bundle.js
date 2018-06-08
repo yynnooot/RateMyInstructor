@@ -108,15 +108,15 @@ var _Root = __webpack_require__(/*! ./components/Root.jsx */ "./client/component
 
 var _Root2 = _interopRequireDefault(_Root);
 
-var _redux = __webpack_require__(/*! ./redux */ "./client/redux/index.js");
+var _store = __webpack_require__(/*! ./store */ "./client/store/index.js");
 
-var _redux2 = _interopRequireDefault(_redux);
+var _store2 = _interopRequireDefault(_store);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _reactDom2.default.render(_react2.default.createElement(
   _reactRedux.Provider,
-  { store: _redux2.default },
+  { store: _store2.default },
   _react2.default.createElement(_Root2.default, null)
 ), document.getElementById('app'));
 
@@ -144,7 +144,11 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
+var _store = __webpack_require__(/*! ../store */ "./client/store/index.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -176,14 +180,18 @@ var InstructorForm = function (_Component) {
       var name = e.target.name;
       var value = e.target.value;
 
-      this.setState({ name: value });
+      this.setState(_defineProperty({}, name, value));
     }
   }, {
     key: 'onSubmit',
     value: function onSubmit(e) {
       e.preventDefault();
-
-      this.props.addReview({ rating: rating });
+      var instructor = {
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        school: this.state.school
+      };
+      this.props.addInstructor(instructor);
     }
   }, {
     key: 'render',
@@ -243,7 +251,11 @@ var InstructorForm = function (_Component) {
 }(_react.Component);
 
 var mapDispatch = function mapDispatch(dispatch) {
-  return {};
+  return {
+    addInstructor: function addInstructor(instructorObj) {
+      return dispatch((0, _store.addInstructorThunk)(instructorObj));
+    }
+  };
 };
 exports.default = (0, _reactRedux.connect)(null, mapDispatch)(InstructorForm);
 
@@ -262,7 +274,6 @@ exports.default = (0, _reactRedux.connect)(null, mapDispatch)(InstructorForm);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Review = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -272,7 +283,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-var _reviews = __webpack_require__(/*! ../redux/reviews */ "./client/redux/reviews.js");
+var _store = __webpack_require__(/*! ../store */ "./client/store/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -282,7 +293,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Review = exports.Review = function (_Component) {
+var Review = function (_Component) {
   _inherits(Review, _Component);
 
   function Review() {
@@ -326,13 +337,13 @@ var Review = exports.Review = function (_Component) {
 
 var mapState = function mapState(state) {
   return {
-    reviews: state.allReviews
+    reviews: state.review.allReviews
   };
 };
 var mapDispatch = function mapDispatch(dispatch) {
   return {
     getReviews: function getReviews() {
-      return dispatch((0, _reviews.getAllReviewsThunk)());
+      return dispatch((0, _store.getAllReviewsThunk)());
     }
   };
 };
@@ -362,7 +373,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-var _reviews = __webpack_require__(/*! ../redux/reviews */ "./client/redux/reviews.js");
+var _store = __webpack_require__(/*! ../store */ "./client/store/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -481,7 +492,7 @@ var ReviewForm = function (_Component) {
 var mapDispatch = function mapDispatch(dispatch) {
   return {
     addReview: function addReview(review) {
-      return dispatch((0, _reviews.addReviewThunk)(review));
+      return dispatch((0, _store.addReviewThunk)(review));
     }
   };
 };
@@ -537,9 +548,9 @@ exports.default = Root;
 
 /***/ }),
 
-/***/ "./client/redux/index.js":
+/***/ "./client/store/index.js":
 /*!*******************************!*\
-  !*** ./client/redux/index.js ***!
+  !*** ./client/store/index.js ***!
   \*******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -551,11 +562,31 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _review = __webpack_require__(/*! ./review */ "./client/store/review.js");
+
+Object.keys(_review).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _review[key];
+    }
+  });
+});
+
+var _instructor = __webpack_require__(/*! ./instructor */ "./client/store/instructor.js");
+
+Object.keys(_instructor).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _instructor[key];
+    }
+  });
+});
+
 var _redux = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
-
-var _reviews = __webpack_require__(/*! ./reviews */ "./client/redux/reviews.js");
-
-var _reviews2 = _interopRequireDefault(_reviews);
 
 var _reduxThunk = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/lib/index.js");
 
@@ -563,18 +594,89 @@ var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
 var _reduxLogger = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js");
 
+var _review2 = _interopRequireDefault(_review);
+
+var _instructor2 = _interopRequireDefault(_instructor);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var store = (0, _redux.createStore)(_reviews2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger.createLogger)()));
+var reducer = (0, _redux.combineReducers)({
+  review: _review2.default,
+  instructor: _instructor2.default
+});
+
+var store = (0, _redux.createStore)(reducer, (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger.createLogger)()));
 
 exports.default = store;
 
 /***/ }),
 
-/***/ "./client/redux/reviews.js":
-/*!*********************************!*\
-  !*** ./client/redux/reviews.js ***!
-  \*********************************/
+/***/ "./client/store/instructor.js":
+/*!************************************!*\
+  !*** ./client/store/instructor.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.addInstructorThunk = undefined;
+
+exports.default = function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case ADD_INSTRUCTOR:
+      return { instructors: [].concat(_toConsumableArray(state.instructors), [action.instructor]) };
+    default:
+      return state;
+  }
+};
+
+var _axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var initialState = {
+  instructors: []
+
+  //action types
+};var ADD_INSTRUCTOR = 'ADD_INSTRUCTOR';
+
+//action creators
+var addInstructor = function addInstructor(instructor) {
+  return {
+    type: ADD_INSTRUCTOR,
+    instructor: instructor
+  };
+};
+
+//thunk creator
+var addInstructorThunk = exports.addInstructorThunk = function addInstructorThunk(instructorObj) {
+  return function (dispatch) {
+    return _axios2.default.post('/api/instructor', instructorObj).then(function (instructor) {
+      dispatch(addInstructor(instructor.data));
+    }).catch(function (err) {
+      return console.log(err);
+    });
+  };
+};
+
+/***/ }),
+
+/***/ "./client/store/review.js":
+/*!********************************!*\
+  !*** ./client/store/review.js ***!
+  \********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

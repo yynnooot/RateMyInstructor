@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
+import { addInstructorThunk } from '../store';
+
 class InstructorForm extends Component {
   constructor(props){
     super(props);
@@ -16,13 +18,17 @@ class InstructorForm extends Component {
     const name = e.target.name
     const value = e.target.value
 
-    this.setState({name: value});
+    this.setState({[name]: value});
   }
 
   onSubmit(e){
     e.preventDefault();
-    
-    this.props.addReview({rating})
+    const instructor = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      school: this.state.school
+    }
+    this.props.addInstructor(instructor)
   }
   render(){
     return(
@@ -59,6 +65,6 @@ class InstructorForm extends Component {
 }
 
 const mapDispatch = (dispatch) => ({
-  
+  addInstructor: (instructorObj) => dispatch(addInstructorThunk(instructorObj))
 })
 export default connect(null, mapDispatch)(InstructorForm)

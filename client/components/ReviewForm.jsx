@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
-import { addReviewThunk } from '../redux/reviews';
+import { addReviewThunk } from '../store';
 
 class ReviewForm extends Component {
   constructor(props){

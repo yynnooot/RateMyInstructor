@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { getAllReviewsThunk } from '../redux/reviews';
+import { getAllReviewsThunk } from '../store';
 
-export class Review extends Component{
+class Review extends Component{
   constructor(){
     super()
     this.state = {
@@ -23,7 +23,7 @@ export class Review extends Component{
   }
 }
 const mapState = (state) => ({
-  reviews: state.allReviews
+  reviews: state.review.allReviews
 })
 const mapDispatch = (dispatch) => ({
   getReviews: () => dispatch(getAllReviewsThunk())

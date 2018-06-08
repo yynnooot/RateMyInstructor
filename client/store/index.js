@@ -5,6 +5,10 @@ import { createLogger } from 'redux-logger';
 import review from './review';
 import instructor from './instructor';
 
+const reducer = combineReducers({
+  review,
+  instructor
+})
 
 const store = createStore(
   reducer,
@@ -15,3 +19,5 @@ const store = createStore(
 );
 
 export default store;
+export * from './review';
+export * from './instructor';
