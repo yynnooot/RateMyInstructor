@@ -261,6 +261,103 @@ exports.default = (0, _reactRedux.connect)(null, mapDispatch)(InstructorForm);
 
 /***/ }),
 
+/***/ "./client/components/Instructors.jsx":
+/*!*******************************************!*\
+  !*** ./client/components/Instructors.jsx ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _store = __webpack_require__(/*! ../store */ "./client/store/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Instructors = function (_Component) {
+  _inherits(Instructors, _Component);
+
+  function Instructors() {
+    _classCallCheck(this, Instructors);
+
+    var _this = _possibleConstructorReturn(this, (Instructors.__proto__ || Object.getPrototypeOf(Instructors)).call(this));
+
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(Instructors, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.getInstructors();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h6',
+          null,
+          'Instructors component:'
+        ),
+        this.props.instructors.length > 0 ? this.props.instructors.map(function (instructor, idx) {
+          return _react2.default.createElement(
+            'div',
+            { key: idx },
+            _react2.default.createElement(
+              'p',
+              null,
+              instructor.firstName,
+              ' ',
+              instructor.lastName
+            )
+          );
+        }) : null
+      );
+    }
+  }]);
+
+  return Instructors;
+}(_react.Component);
+
+var mapState = function mapState(state) {
+  return {
+    instructors: state.instructor.instructors
+  };
+};
+
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    getInstructors: function getInstructors() {
+      return dispatch((0, _store.getAllInstructorsThunk)());
+    }
+  };
+};
+exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(Instructors);
+
+/***/ }),
+
 /***/ "./client/components/Review.jsx":
 /*!**************************************!*\
   !*** ./client/components/Review.jsx ***!
@@ -532,6 +629,10 @@ var _InstructorForm = __webpack_require__(/*! ./InstructorForm.jsx */ "./client/
 
 var _InstructorForm2 = _interopRequireDefault(_InstructorForm);
 
+var _Instructors = __webpack_require__(/*! ./Instructors.jsx */ "./client/components/Instructors.jsx");
+
+var _Instructors2 = _interopRequireDefault(_Instructors);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Root = function Root() {
@@ -540,6 +641,7 @@ var Root = function Root() {
     null,
     _react2.default.createElement(_ReviewForm2.default, null),
     _react2.default.createElement(_Review2.default, null),
+    _react2.default.createElement(_Instructors2.default, null),
     _react2.default.createElement(_InstructorForm2.default, null)
   );
 };
@@ -624,7 +726,7 @@ exports.default = store;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addInstructorThunk = undefined;
+exports.getAllInstructorsThunk = exports.addInstructorThunk = undefined;
 
 exports.default = function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
@@ -632,7 +734,10 @@ exports.default = function () {
 
   switch (action.type) {
     case ADD_INSTRUCTOR:
+      q;
       return { instructors: [].concat(_toConsumableArray(state.instructors), [action.instructor]) };
+    case GET_ALL_INSTRUCTORS:
+      return { instructors: action.instructors };
     default:
       return state;
   }
@@ -651,6 +756,7 @@ var initialState = {
 
   //action types
 };var ADD_INSTRUCTOR = 'ADD_INSTRUCTOR';
+var GET_ALL_INSTRUCTORS = 'GET_ALL_INSTRUCTORS';
 
 //action creators
 var addInstructor = function addInstructor(instructor) {
@@ -660,11 +766,28 @@ var addInstructor = function addInstructor(instructor) {
   };
 };
 
+var getAllInstructors = function getAllInstructors(instructors) {
+  return {
+    type: GET_ALL_INSTRUCTORS,
+    instructors: instructors
+  };
+};
+
 //thunk creator
 var addInstructorThunk = exports.addInstructorThunk = function addInstructorThunk(instructorObj) {
   return function (dispatch) {
     return _axios2.default.post('/api/instructor', instructorObj).then(function (instructor) {
       dispatch(addInstructor(instructor.data));
+    }).catch(function (err) {
+      return console.log(err);
+    });
+  };
+};
+
+var getAllInstructorsThunk = exports.getAllInstructorsThunk = function getAllInstructorsThunk() {
+  return function (dispatch) {
+    return _axios2.default.get('/api/instructor').then(function (instructors) {
+      dispatch(getAllInstructors(instructors.data));
     }).catch(function (err) {
       return console.log(err);
     });
