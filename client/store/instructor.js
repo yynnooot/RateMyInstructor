@@ -31,7 +31,7 @@ export const getInstructorThunk = (instructorId) =>
   dispatch => 
     axios.get(`/api/instructor/${instructorId}`)
       .then(instructor => {
-        dispatch(getInstructor(instructor))
+        dispatch(getInstructor(instructor.data))
       })
 
 export const addInstructorThunk = (instructorObj) => 
@@ -53,7 +53,7 @@ export const getAllInstructorsThunk = () =>
 export default function (state = initialState, action){
   switch (action.type) {
     case GET_INSTRUCTOR:
-      return { ...state, current: action.instructor}
+      return { ...state, currentInstructor: action.instructor}
     case ADD_INSTRUCTOR:
       return { instructors: [...state.instructors, action.instructor] }
     case GET_ALL_INSTRUCTORS:

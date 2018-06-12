@@ -14,7 +14,7 @@ router.get('/', function (req, res, next){
 })
 
 router.get('/:id', function (req, res, next) { 
-  Instructor.find({_id: req.params.id}, function(err, instructor){
+  Instructor.findById(req.params.id, function(err, instructor){
     if(err){
       console.log(err)
     }else{

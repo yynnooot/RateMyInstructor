@@ -342,6 +342,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
+var _store = __webpack_require__(/*! ../store */ "./client/store/index.js");
+
 var _ReviewForm = __webpack_require__(/*! ./ReviewForm.jsx */ "./client/components/ReviewForm.jsx");
 
 var _ReviewForm2 = _interopRequireDefault(_ReviewForm);
@@ -361,21 +363,33 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var InstructorPage = function (_Component) {
   _inherits(InstructorPage, _Component);
 
-  function InstructorPage() {
+  function InstructorPage(props) {
     _classCallCheck(this, InstructorPage);
 
-    var _this = _possibleConstructorReturn(this, (InstructorPage.__proto__ || Object.getPrototypeOf(InstructorPage)).call(this));
+    var _this = _possibleConstructorReturn(this, (InstructorPage.__proto__ || Object.getPrototypeOf(InstructorPage)).call(this, props));
 
     _this.state = {};
     return _this;
   }
 
   _createClass(InstructorPage, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var id = this.props.match.params.id;
+      this.props.getInstructor(id);
+    }
+  }, {
     key: 'render',
     value: function render() {
+      console.log('________state', this.props.instructor);
       return _react2.default.createElement(
         'div',
         null,
+        _react2.default.createElement(
+          'h1',
+          null,
+          this.props.instructor.firstName
+        ),
         _react2.default.createElement(_Review2.default, null),
         _react2.default.createElement(_ReviewForm2.default, null)
       );
@@ -385,12 +399,18 @@ var InstructorPage = function (_Component) {
   return InstructorPage;
 }(_react.Component);
 
-var mapState = function mapState() {
-  return {};
+var mapState = function mapState(state) {
+  return {
+    instructor: state.instructor.currentInstructor
+  };
 };
 
-var mapDispatch = function mapDispatch() {
-  return {};
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    getInstructor: function getInstructor(id) {
+      return dispatch((0, _store.getInstructorThunk)(id));
+    }
+  };
 };
 exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(InstructorPage);
 
@@ -888,7 +908,7 @@ exports.default = function () {
 
   switch (action.type) {
     case GET_INSTRUCTOR:
-      return _extends({}, state, { current: action.instructor });
+      return _extends({}, state, { currentInstructor: action.instructor });
     case ADD_INSTRUCTOR:
       return { instructors: [].concat(_toConsumableArray(state.instructors), [action.instructor]) };
     case GET_ALL_INSTRUCTORS:
@@ -941,7 +961,7 @@ var getAllInstructors = function getAllInstructors(instructors) {
 var getInstructorThunk = exports.getInstructorThunk = function getInstructorThunk(instructorId) {
   return function (dispatch) {
     return _axios2.default.get('/api/instructor/' + instructorId).then(function (instructor) {
-      dispatch(getInstructor(instructor));
+      dispatch(getInstructor(instructor.data));
     });
   };
 };
