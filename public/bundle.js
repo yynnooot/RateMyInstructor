@@ -878,15 +878,18 @@ exports.default = store;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getAllInstructorsThunk = exports.addInstructorThunk = undefined;
+exports.getAllInstructorsThunk = exports.addInstructorThunk = exports.getInstructorThunk = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 exports.default = function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments[1];
 
   switch (action.type) {
+    case GET_INSTRUCTOR:
+      return _extends({}, state, { current: action.instructor });
     case ADD_INSTRUCTOR:
-      q;
       return { instructors: [].concat(_toConsumableArray(state.instructors), [action.instructor]) };
     case GET_ALL_INSTRUCTORS:
       return { instructors: action.instructors };
@@ -904,16 +907,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var initialState = {
+  currentInstructor: {},
   instructors: []
 
   //action types
 };var ADD_INSTRUCTOR = 'ADD_INSTRUCTOR';
+var GET_INSTRUCTOR = 'GET_INSTRUCTOR';
 var GET_ALL_INSTRUCTORS = 'GET_ALL_INSTRUCTORS';
 
 //action creators
 var addInstructor = function addInstructor(instructor) {
   return {
     type: ADD_INSTRUCTOR,
+    instructor: instructor
+  };
+};
+
+var getInstructor = function getInstructor(instructor) {
+  return {
+    type: GET_INSTRUCTOR,
     instructor: instructor
   };
 };
@@ -926,6 +938,14 @@ var getAllInstructors = function getAllInstructors(instructors) {
 };
 
 //thunk creator
+var getInstructorThunk = exports.getInstructorThunk = function getInstructorThunk(instructorId) {
+  return function (dispatch) {
+    return _axios2.default.get('/api/instructor/' + instructorId).then(function (instructor) {
+      dispatch(getInstructor(instructor));
+    });
+  };
+};
+
 var addInstructorThunk = exports.addInstructorThunk = function addInstructorThunk(instructorObj) {
   return function (dispatch) {
     return _axios2.default.post('/api/instructor', instructorObj).then(function (instructor) {
