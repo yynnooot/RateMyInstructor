@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import ReviewForm from './ReviewForm.jsx';
+import Review from './Review.jsx';
+
 class InstructorPage extends Component{
   constructor(){
     super()
@@ -11,7 +14,8 @@ class InstructorPage extends Component{
   render(){
     return (
       <div>
-
+        <Review />
+        <ReviewForm />
       </div>
     )
   }

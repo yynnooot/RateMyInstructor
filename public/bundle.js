@@ -122,6 +122,65 @@ _reactDom2.default.render(_react2.default.createElement(
 
 /***/ }),
 
+/***/ "./client/components/Home.jsx":
+/*!************************************!*\
+  !*** ./client/components/Home.jsx ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Instructors = __webpack_require__(/*! ./Instructors.jsx */ "./client/components/Instructors.jsx");
+
+var _Instructors2 = _interopRequireDefault(_Instructors);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Home = function (_Component) {
+  _inherits(Home, _Component);
+
+  function Home(props) {
+    _classCallCheck(this, Home);
+
+    return _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
+  }
+
+  _createClass(Home, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_Instructors2.default, null)
+      );
+    }
+  }]);
+
+  return Home;
+}(_react.Component);
+
+exports.default = Home;
+
+/***/ }),
+
 /***/ "./client/components/InstructorForm.jsx":
 /*!**********************************************!*\
   !*** ./client/components/InstructorForm.jsx ***!
@@ -261,6 +320,82 @@ exports.default = (0, _reactRedux.connect)(null, mapDispatch)(InstructorForm);
 
 /***/ }),
 
+/***/ "./client/components/InstructorPage.jsx":
+/*!**********************************************!*\
+  !*** ./client/components/InstructorPage.jsx ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _ReviewForm = __webpack_require__(/*! ./ReviewForm.jsx */ "./client/components/ReviewForm.jsx");
+
+var _ReviewForm2 = _interopRequireDefault(_ReviewForm);
+
+var _Review = __webpack_require__(/*! ./Review.jsx */ "./client/components/Review.jsx");
+
+var _Review2 = _interopRequireDefault(_Review);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var InstructorPage = function (_Component) {
+  _inherits(InstructorPage, _Component);
+
+  function InstructorPage() {
+    _classCallCheck(this, InstructorPage);
+
+    var _this = _possibleConstructorReturn(this, (InstructorPage.__proto__ || Object.getPrototypeOf(InstructorPage)).call(this));
+
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(InstructorPage, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_Review2.default, null),
+        _react2.default.createElement(_ReviewForm2.default, null)
+      );
+    }
+  }]);
+
+  return InstructorPage;
+}(_react.Component);
+
+var mapState = function mapState() {
+  return {};
+};
+
+var mapDispatch = function mapDispatch() {
+  return {};
+};
+exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(InstructorPage);
+
+/***/ }),
+
 /***/ "./client/components/Instructors.jsx":
 /*!*******************************************!*\
   !*** ./client/components/Instructors.jsx ***!
@@ -282,6 +417,8 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
 var _store = __webpack_require__(/*! ../store */ "./client/store/index.js");
 
@@ -322,15 +459,20 @@ var Instructors = function (_Component) {
           'Instructors component:'
         ),
         this.props.instructors.length > 0 ? this.props.instructors.map(function (instructor, idx) {
+          console.log('instructor:', instructor);
           return _react2.default.createElement(
             'div',
             { key: idx },
             _react2.default.createElement(
-              'p',
-              null,
-              instructor.firstName,
-              ' ',
-              instructor.lastName
+              _reactRouterDom.Link,
+              { to: '/instructors/' + instructor._id },
+              _react2.default.createElement(
+                'p',
+                null,
+                instructor.firstName,
+                ' ',
+                instructor.lastName
+              )
             )
           );
         }) : null
@@ -633,16 +775,26 @@ var _Instructors = __webpack_require__(/*! ./Instructors.jsx */ "./client/compon
 
 var _Instructors2 = _interopRequireDefault(_Instructors);
 
+var _InstructorPage = __webpack_require__(/*! ./InstructorPage.jsx */ "./client/components/InstructorPage.jsx");
+
+var _InstructorPage2 = _interopRequireDefault(_InstructorPage);
+
+var _Home = __webpack_require__(/*! ./Home.jsx */ "./client/components/Home.jsx");
+
+var _Home2 = _interopRequireDefault(_Home);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Root = function Root() {
   return _react2.default.createElement(
-    'div',
+    _reactRouterDom.BrowserRouter,
     null,
-    _react2.default.createElement(_ReviewForm2.default, null),
-    _react2.default.createElement(_Review2.default, null),
-    _react2.default.createElement(_Instructors2.default, null),
-    _react2.default.createElement(_InstructorForm2.default, null)
+    _react2.default.createElement(
+      _reactRouterDom.Switch,
+      null,
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _Home2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { path: '/instructors/:id', component: _InstructorPage2.default })
+    )
   );
 };
 
