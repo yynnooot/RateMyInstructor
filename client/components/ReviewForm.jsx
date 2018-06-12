@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { addReviewThunk } from '../store';
 
@@ -19,9 +20,11 @@ class ReviewForm extends Component {
   onSubmit(e){
     e.preventDefault();
     const rating = this.state.rating;
-    this.props.addReview({rating})
+    const instructor = this.props.instructorId
+    this.props.addReview({rating, instructor})
   }
   render(){
+    
     return(
       <div>
         <h1>FORM</h1>
@@ -51,7 +54,13 @@ class ReviewForm extends Component {
   }
 }
 
+ReviewForm.propTypes = {
+  instructorId: PropTypes.string
+}
+
 const mapDispatch = (dispatch) => ({
   addReview: (review) => dispatch(addReviewThunk(review))
 })
+
+
 export default connect(null, mapDispatch)(ReviewForm)

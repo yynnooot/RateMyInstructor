@@ -1,31 +1,15 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux';
-import { getAllReviewsThunk } from '../store';
 
-class Review extends Component{
-  constructor(){
-    super()
-    this.state = {
+const Review = props => 
+  (
+    <div>
+      <h1>Review</h1>
+      
+      {/* {props.reviews.isArray() ? props.reviews.map((review, index) => <h3 key={index}>{review.rating}</h3>)
+      : <p>no reviews</p>} */}
+      {/* {props.reviews.isArray() ? <p>reviews here</p>: <p>no reviews</p>} */}
+    </div>
+  )
+  
+export default Review;
 
-    }
-  }
-  componentDidMount(){
-    this.props.getReviews()
-  }
-  render(){
-    return (
-      <div>
-        <h1>Review</h1>
-        {this.props.reviews.length > 0 ? this.props.reviews.map((review, index) => <h3 key={index}>{review.rating}</h3>)
-        : null}
-      </div>
-    )
-  }
-}
-const mapState = (state) => ({
-  reviews: state.review.allReviews
-})
-const mapDispatch = (dispatch) => ({
-  getReviews: () => dispatch(getAllReviewsThunk())
-})
-export default connect(mapState, mapDispatch)(Review);

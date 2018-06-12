@@ -381,17 +381,24 @@ var InstructorPage = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      console.log('________state', this.props.instructor);
+      var instructor = this.props.instructor;
+
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
           'h1',
           null,
-          this.props.instructor.firstName
+          instructor.firstName,
+          ' ',
+          instructor.lastName
         ),
-        _react2.default.createElement(_Review2.default, null),
-        _react2.default.createElement(_ReviewForm2.default, null)
+        _react2.default.createElement(
+          'h1',
+          null,
+          instructor.school
+        ),
+        _react2.default.createElement(_ReviewForm2.default, { instructorId: instructor._id })
       );
     }
   }]);
@@ -534,79 +541,25 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-
-var _store = __webpack_require__(/*! ../store */ "./client/store/index.js");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Review = function (_Component) {
-  _inherits(Review, _Component);
-
-  function Review() {
-    _classCallCheck(this, Review);
-
-    var _this = _possibleConstructorReturn(this, (Review.__proto__ || Object.getPrototypeOf(Review)).call(this));
-
-    _this.state = {};
-    return _this;
-  }
-
-  _createClass(Review, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.props.getReviews();
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'h1',
-          null,
-          'Review'
-        ),
-        this.props.reviews.length > 0 ? this.props.reviews.map(function (review, index) {
-          return _react2.default.createElement(
-            'h3',
-            { key: index },
-            review.rating
-          );
-        }) : null
-      );
-    }
-  }]);
-
-  return Review;
-}(_react.Component);
-
-var mapState = function mapState(state) {
-  return {
-    reviews: state.review.allReviews
-  };
+var Review = function Review(props) {
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'h1',
+      null,
+      'Review'
+    )
+  );
 };
-var mapDispatch = function mapDispatch(dispatch) {
-  return {
-    getReviews: function getReviews() {
-      return dispatch((0, _store.getAllReviewsThunk)());
-    }
-  };
-};
-exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(Review);
+
+exports.default = Review;
 
 /***/ }),
 
@@ -631,6 +584,10 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _store = __webpack_require__(/*! ../store */ "./client/store/index.js");
 
@@ -668,11 +625,13 @@ var ReviewForm = function (_Component) {
     value: function onSubmit(e) {
       e.preventDefault();
       var rating = this.state.rating;
-      this.props.addReview({ rating: rating });
+      var instructor = this.props.instructorId;
+      this.props.addReview({ rating: rating, instructor: instructor });
     }
   }, {
     key: 'render',
     value: function render() {
+
       return _react2.default.createElement(
         'div',
         null,
@@ -748,6 +707,10 @@ var ReviewForm = function (_Component) {
   return ReviewForm;
 }(_react.Component);
 
+ReviewForm.propTypes = {
+  instructorId: _propTypes2.default.string
+};
+
 var mapDispatch = function mapDispatch(dispatch) {
   return {
     addReview: function addReview(review) {
@@ -755,6 +718,7 @@ var mapDispatch = function mapDispatch(dispatch) {
     }
   };
 };
+
 exports.default = (0, _reactRedux.connect)(null, mapDispatch)(ReviewForm);
 
 /***/ }),

@@ -17,7 +17,7 @@ router.post('/', function (req, res, next) {
   const newReview = new Review({
     rating: req.body.rating,
     author: req.session.userId,
-    // instructor: '12345'
+    instructor: req.body.instructor
   })
   newReview.save()
   .then(review => {

@@ -18,12 +18,13 @@ class InstructorPage extends Component{
     this.props.getInstructor(id);
   }
   render(){
-    console.log('________state', this.props.instructor)
+    const { instructor } = this.props
     return (
       <div>
-        <h1>{this.props.instructor.firstName}</h1>
-        <Review />
-        <ReviewForm />
+        <h1>{instructor.firstName} {instructor.lastName}</h1>
+        <h1>{instructor.school}</h1>
+        {/* <Review reviews={instructor.reviews}/> */}
+        <ReviewForm instructorId={instructor._id}/>
       </div>
     )
   }
