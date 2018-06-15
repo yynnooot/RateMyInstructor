@@ -18,25 +18,34 @@ router.post('/', function (req, res, next) {
     author: req.session.userId,
     instructor: req.body.instructorId
   })
-  newReview.save(function(err){
-    if(err) console.log(err);
+  newReview.save()
+  .then(review => {
+
     // add review id to User model
     User.findById(req.session.userId, function(err, user){
       if(err) return res.send(err)
-      user.reviews.push(newReview._id)
-      user.save()
+      user.reviews.push(review._id)
+      user.save(function(err){
+        if (!err) {
+          console.log("updated");
+        } else {
+            console.log(err);
+        }
+      })
     })
-
+    
     // add review id to Instructor model
     Instructor.findById(req.body.instructorId, function(err, instructor){
       if(err) return res.send(err)
-      instructor.reviews.push(newReview._id)
-      instructor.save()
+      instructor.reviews.push(review._id)
+      instructor.save(function(err){
+        if (!err) {
+          console.log("updated");
+        } else {
+            console.log(err);
+        }
+      })
     })
-   
-  })
-  .then(review => {
-     
     res.json(review)
   })
 });
