@@ -383,12 +383,14 @@ var InstructorPage = function (_Component) {
     value: function render() {
       var instructor = this.props.instructor;
 
+      console.log('______instructor:', instructor);
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
           'h1',
           null,
+          'Instructor: ',
           instructor.firstName,
           ' ',
           instructor.lastName
@@ -396,6 +398,7 @@ var InstructorPage = function (_Component) {
         _react2.default.createElement(
           'h1',
           null,
+          'School: ',
           instructor.school
         ),
         _react2.default.createElement(_ReviewForm2.default, { instructorId: instructor._id })
@@ -625,8 +628,8 @@ var ReviewForm = function (_Component) {
     value: function onSubmit(e) {
       e.preventDefault();
       var rating = this.state.rating;
-      var instructor = this.props.instructorId;
-      this.props.addReview({ rating: rating, instructor: instructor });
+      var instructorId = this.props.instructorId;
+      this.props.addReview({ rating: rating, instructorId: instructorId });
     }
   }, {
     key: 'render',

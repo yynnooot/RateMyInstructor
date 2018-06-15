@@ -20,8 +20,8 @@ class ReviewForm extends Component {
   onSubmit(e){
     e.preventDefault();
     const rating = this.state.rating;
-    const instructor = this.props.instructorId
-    this.props.addReview({rating, instructor})
+    const instructorId = this.props.instructorId
+    this.props.addReview({rating, instructorId})
   }
   render(){
     

@@ -1,6 +1,6 @@
 // api/review
 const router = require('express').Router();
-const { Review } = require('../models');
+const { Review, Instructor, User } = require('../models');
 
 router.get('/', function (req, res, next) { 
   Review.find({}, function(err, reviews){
@@ -13,14 +13,30 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) { 
-  console.log('POST___________req.session',req.session)
   const newReview = new Review({
     rating: req.body.rating,
     author: req.session.userId,
-    instructor: req.body.instructor
+    instructor: req.body.instructorId
   })
-  newReview.save()
+  newReview.save(function(err){
+    if(err) console.log(err);
+    // add review id to User model
+    User.findById(req.session.userId, function(err, user){
+      if(err) return res.send(err)
+      user.reviews.push(newReview._id)
+      user.save()
+    })
+
+    // add review id to Instructor model
+    Instructor.findById(req.body.instructorId, function(err, instructor){
+      if(err) return res.send(err)
+      instructor.reviews.push(newReview._id)
+      instructor.save()
+    })
+   
+  })
   .then(review => {
+     
     res.json(review)
   })
 });
