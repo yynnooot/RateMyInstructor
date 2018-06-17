@@ -1,5 +1,4 @@
-const { GraphQLObjectType } = require('graphql');
-const { GraphQLList } = require('graphql');
+const { GraphQLObjectType, GraphQLList } = require('graphql');
 const User = require('../../models/user');
 const { userType } = require('../types/user');
 
@@ -11,7 +10,7 @@ exports.queryType = new GraphQLObjectType({
       users: {
         type: new GraphQLList(userType),
         async resolve() {
-          const users = await User.find();
+          const users = await User.find().populate({ path: 'reviews' });
           if (!users) {
             throw new Error('Error');
           }

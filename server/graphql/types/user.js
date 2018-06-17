@@ -1,7 +1,14 @@
-const GraphQLObjectType = require('graphql').GraphQLObjectType;
-const GraphQLNonNull = require('graphql').GraphQLNonNull;
-const GraphQLID = require('graphql').GraphQLID;
-const GraphQLString = require('graphql').GraphQLString;
+const {
+  GraphQLObjectType,
+  GraphQLNonNull,
+  GraphQLID,
+  GraphQLList,
+  GraphQLString,
+}
+  = require('graphql');
+
+const { reviewType } = require('./review');
+
 
 // User Type
 const userType = new GraphQLObjectType({
@@ -14,6 +21,14 @@ const userType = new GraphQLObjectType({
       name: {
         type: GraphQLString,
       },
+      email: {
+        type: GraphQLString,
+      },
+      school: {
+        type: GraphQLString,
+      },
+      reviews: { type: new GraphQLList(reviewType) }
+      ,
     };
   },
 });
