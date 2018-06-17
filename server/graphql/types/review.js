@@ -24,4 +24,4 @@ const reviewType = new GraphQLObjectType({
   },
 });
 
-module.exports = { reviewType };
+module.exports = reviewType;

@@ -1,6 +1,6 @@
 const { GraphQLObjectType, GraphQLList } = require('graphql');
 const User = require('../../models/user');
-const { userType } = require('../types/user');
+const userType = require('../types/user'); // cannot import from index??
 
 // Query
 exports.queryType = new GraphQLObjectType({

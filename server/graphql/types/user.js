@@ -7,7 +7,7 @@ const {
 }
   = require('graphql');
 
-const { reviewType } = require('./review');
+const { reviewType } = require('./');
 
 
 // User Type
@@ -33,4 +33,4 @@ const userType = new GraphQLObjectType({
   },
 });
 
-module.exports = { userType };
+module.exports = userType;
