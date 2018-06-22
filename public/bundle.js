@@ -547,6 +547,42 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(Instructors);
 
 /***/ }),
 
+/***/ "./client/components/Nav.jsx":
+/*!***********************************!*\
+  !*** ./client/components/Nav.jsx ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Nav = function Nav() {
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'h1',
+      null,
+      'THIS IS NAV'
+    )
+  );
+};
+
+exports.default = Nav;
+
+/***/ }),
+
 /***/ "./client/components/Review.jsx":
 /*!**************************************!*\
   !*** ./client/components/Review.jsx ***!
@@ -787,6 +823,10 @@ var _Home = __webpack_require__(/*! ./Home.jsx */ "./client/components/Home.jsx"
 
 var _Home2 = _interopRequireDefault(_Home);
 
+var _Nav = __webpack_require__(/*! ./Nav.jsx */ "./client/components/Nav.jsx");
+
+var _Nav2 = _interopRequireDefault(_Nav);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Root = function Root() {
@@ -794,10 +834,15 @@ var Root = function Root() {
     _reactRouterDom.BrowserRouter,
     null,
     _react2.default.createElement(
-      _reactRouterDom.Switch,
+      'div',
       null,
-      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _Home2.default }),
-      _react2.default.createElement(_reactRouterDom.Route, { path: '/instructors/:id', component: _InstructorPage2.default })
+      _react2.default.createElement(_Nav2.default, null),
+      _react2.default.createElement(
+        _reactRouterDom.Switch,
+        null,
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _Home2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { path: '/instructors/:id', component: _InstructorPage2.default })
+      )
     )
   );
 };

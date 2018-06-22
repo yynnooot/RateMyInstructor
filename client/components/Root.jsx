@@ -7,14 +7,18 @@ import InstructorForm from './InstructorForm.jsx';
 import Instructors from './Instructors.jsx';
 import InstructorPage from './InstructorPage.jsx';
 import Home from './Home.jsx';
+import Nav from './Nav.jsx';
 
 const Root = () => 
   (
       <Router>
-        <Switch>
-          <Route exact path='/' component={Home} />
-          <Route path='/instructors/:id' component={InstructorPage}/>
-        </Switch>
+        <div>
+          <Nav />
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route path='/instructors/:id' component={InstructorPage}/>
+          </Switch>
+        </div>
       </Router> 
   )
 
