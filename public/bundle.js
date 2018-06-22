@@ -104,13 +104,13 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-var _Root = __webpack_require__(/*! ./components/Root.jsx */ "./client/components/Root.jsx");
-
-var _Root2 = _interopRequireDefault(_Root);
-
 var _store = __webpack_require__(/*! ./store */ "./client/store/index.js");
 
 var _store2 = _interopRequireDefault(_store);
+
+var _Root = __webpack_require__(/*! ./components/Root.jsx */ "./client/components/Root.jsx");
+
+var _Root2 = _interopRequireDefault(_Root);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -342,6 +342,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _store = __webpack_require__(/*! ../store */ "./client/store/index.js");
 
 var _ReviewForm = __webpack_require__(/*! ./ReviewForm.jsx */ "./client/components/ReviewForm.jsx");
@@ -383,26 +387,33 @@ var InstructorPage = function (_Component) {
     value: function render() {
       var instructor = this.props.instructor;
 
-      console.log('______instructor:', instructor);
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'h1',
+      if (instructor) {
+        return _react2.default.createElement(
+          'div',
           null,
-          'Instructor: ',
-          instructor.firstName,
-          ' ',
-          instructor.lastName
-        ),
-        _react2.default.createElement(
-          'h1',
+          _react2.default.createElement(
+            'h1',
+            null,
+            'Instructor: ',
+            instructor.firstName,
+            ' ',
+            instructor.lastName
+          ),
+          _react2.default.createElement(
+            'h1',
+            null,
+            'School: ',
+            instructor.school
+          ),
+          _react2.default.createElement(_ReviewForm2.default, { instructorId: instructor._id })
+        );
+      } else {
+        return _react2.default.createElement(
+          'div',
           null,
-          'School: ',
-          instructor.school
-        ),
-        _react2.default.createElement(_ReviewForm2.default, { instructorId: instructor._id })
-      );
+          'loading'
+        );
+      }
     }
   }]);
 
@@ -422,6 +433,12 @@ var mapDispatch = function mapDispatch(dispatch) {
     }
   };
 };
+
+InstructorPage.propTypes = {
+  instructor: _propTypes2.default.object,
+  getInstructor: _propTypes2.default.function
+};
+
 exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(InstructorPage);
 
 /***/ }),
@@ -494,11 +511,11 @@ var Instructors = function (_Component) {
             'div',
             { key: idx },
             _react2.default.createElement(
-              _reactRouterDom.Link,
-              { to: '/instructors/' + instructor._id },
+              'p',
+              null,
               _react2.default.createElement(
-                'p',
-                null,
+                _reactRouterDom.Link,
+                { to: '/instructors/' + instructor._id },
                 instructor.firstName,
                 ' ',
                 instructor.lastName

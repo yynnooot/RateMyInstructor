@@ -21,7 +21,7 @@ class Instructors extends Component{
         {this.props.instructors.length > 0 ? this.props.instructors.map((instructor,idx)=> {
           console.log('instructor:',instructor)
           return (<div key={idx}>
-            <Link to={`/instructors/${instructor._id}`}><p>{instructor.firstName} {instructor.lastName}</p></Link>
+            <p><Link to={`/instructors/${instructor._id}`}>{instructor.firstName} {instructor.lastName}</Link></p>
           </div> )        
         }) : null}
       </div>

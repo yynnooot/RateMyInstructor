@@ -10,12 +10,12 @@ import Home from './Home.jsx';
 
 const Root = () => 
   (
-    <Router>
-      <Switch>
-        <Route exact path='/' component={Home} />
-        <Route path='/instructors/:id' component={InstructorPage}/>
-      </Switch>
-    </Router>
+      <Router>
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <Route path='/instructors/:id' component={InstructorPage}/>
+        </Switch>
+      </Router> 
   )
 
 export default Root;

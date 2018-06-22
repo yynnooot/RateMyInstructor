@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
 
 import { getInstructorThunk } from '../store';
 
@@ -17,17 +18,23 @@ class InstructorPage extends Component{
     const id = this.props.match.params.id;
     this.props.getInstructor(id);
   }
+  
   render(){
     const { instructor } = this.props
-    console.log('______instructor:', instructor)
-    return (
-      <div>
-        <h1>Instructor: {instructor.firstName} {instructor.lastName}</h1>
-        <h1>School: {instructor.school}</h1>
-        {/* <Review reviews={instructor.reviews}/> */}
-        <ReviewForm instructorId={instructor._id}/>
-      </div>
-    )
+    if(instructor) {
+      return (
+        <div>
+          <h1>Instructor: {instructor.firstName} {instructor.lastName}</h1>
+          <h1>School: {instructor.school}</h1>
+          {/* <Review reviews={instructor.reviews}/> */}
+          <ReviewForm instructorId={instructor._id}/>
+        </div>
+      )
+    } else {
+      return (
+        <div>loading</div>
+      )
+    }
   }
 }
 const mapState = (state) => ({
@@ -35,6 +42,12 @@ const mapState = (state) => ({
 })
 
 const mapDispatch = (dispatch) => ({
-  getInstructor : (id) => dispatch(getInstructorThunk(id))
+  getInstructor: (id) => dispatch(getInstructorThunk(id))
 })
-export default connect(mapState, mapDispatch)(InstructorPage);
+
+InstructorPage.propTypes = {
+  instructor: PropTypes.object,
+  getInstructor: PropTypes.function
+}
+
+export default connect(mapState, mapDispatch)(InstructorPage)
