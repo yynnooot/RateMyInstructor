@@ -12,7 +12,7 @@ import Nav from './Nav.jsx';
 const Root = () => 
   (
       <Router>
-        <div>
+        <div className='root-container'>
           <Nav />
           <Switch>
             <Route exact path='/' component={Home} />

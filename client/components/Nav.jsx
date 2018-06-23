@@ -2,8 +2,8 @@ import React from 'react'
 
 const Nav = () => 
   (
-    <div>
-      <h1>THIS IS NAV</h1>
+    <div className='nav-container'>
+      <h1>RateMyInstructor</h1>
     </div>
   )
 

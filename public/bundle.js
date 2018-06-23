@@ -570,11 +570,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Nav = function Nav() {
   return _react2.default.createElement(
     'div',
-    null,
+    { className: 'nav-container' },
     _react2.default.createElement(
       'h1',
       null,
-      'THIS IS NAV'
+      'RateMyInstructor'
     )
   );
 };
@@ -835,7 +835,7 @@ var Root = function Root() {
     null,
     _react2.default.createElement(
       'div',
-      null,
+      { className: 'root-container' },
       _react2.default.createElement(_Nav2.default, null),
       _react2.default.createElement(
         _reactRouterDom.Switch,
@@ -2776,7 +2776,7 @@ exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/li
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "* {\n  margin: 0;\n  padding: 0; }\n\n.nav-container {\n  width: 100%;\n  height: 100px;\n  background-color: blue; }\n", ""]);
 
 // exports
 
