@@ -565,6 +565,8 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Nav = function Nav() {
@@ -574,7 +576,11 @@ var Nav = function Nav() {
     _react2.default.createElement(
       'h1',
       null,
-      'RateMyInstructor'
+      _react2.default.createElement(
+        _reactRouterDom.Link,
+        { to: '/' },
+        'RateMyInstructor'
+      )
     )
   );
 };

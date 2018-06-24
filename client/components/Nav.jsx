@@ -1,9 +1,10 @@
 import React from 'react'
+import {Link} from 'react-router-dom';
 
 const Nav = () => 
   (
     <div className='nav-container'>
-      <h1>RateMyInstructor</h1>
+      <h1><Link to={'/'}>RateMyInstructor</Link></h1>
     </div>
   )
 
