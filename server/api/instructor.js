@@ -14,13 +14,17 @@ router.get('/', function (req, res, next){
 })
 
 router.get('/:id', function (req, res, next) { 
-  Instructor.findById(req.params.id, function(err, instructor){
-    if(err){
-      console.log(err)
-    }else{
-      res.json(instructor)
-    }
-  })
+  Instructor.
+    findById(req.params.id).
+    populate('reviews').
+    exec(function(err, instructor){
+      if(err){
+        console.log(err)
+      }else{
+        console.log('instructor in API:', instructor)
+        res.json(instructor)
+      }
+    })
 });
 
 router.post('/', function (req, res, next) { 

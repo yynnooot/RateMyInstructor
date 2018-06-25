@@ -405,6 +405,7 @@ var InstructorPage = function (_Component) {
             'School: ',
             instructor.school
           ),
+          _react2.default.createElement(_Review2.default, { reviews: instructor.reviews }),
           _react2.default.createElement(_ReviewForm2.default, { instructorId: instructor._id })
         );
       } else {
@@ -607,6 +608,10 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Review = function Review(props) {
@@ -617,10 +622,20 @@ var Review = function Review(props) {
       'h1',
       null,
       'Review'
-    )
+    ),
+    props.reviews.map(function (review, idx) {
+      return _react2.default.createElement(
+        'p',
+        null,
+        review.rating
+      );
+    })
   );
 };
 
+Review.propTypes = {
+  reviews: _propTypes2.default.array
+};
 exports.default = Review;
 
 /***/ }),

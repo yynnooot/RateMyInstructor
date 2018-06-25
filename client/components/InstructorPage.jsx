@@ -26,7 +26,7 @@ class InstructorPage extends Component{
         <div>
           <h1>Instructor: {instructor.firstName} {instructor.lastName}</h1>
           <h1>School: {instructor.school}</h1>
-          {/* <Review reviews={instructor.reviews}/> */}
+          <Review reviews={instructor.reviews}/>
           <ReviewForm instructorId={instructor._id}/>
         </div>
       )
