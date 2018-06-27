@@ -15,6 +15,7 @@ class InstructorPage extends Component{
     }
   }
   componentDidMount(){
+    console.log('COMPONENT DID MOUNT IN INSTRUCTORPAGE')
     const id = this.props.match.params.id;
     this.props.getInstructor(id);
   }
@@ -45,9 +46,9 @@ const mapDispatch = (dispatch) => ({
   getInstructor: (id) => dispatch(getInstructorThunk(id))
 })
 
-InstructorPage.propTypes = {
-  instructor: PropTypes.object,
-  getInstructor: PropTypes.function
-}
+// InstructorPage.propTypes = {
+//   instructor: PropTypes.object,
+//   getInstructor: PropTypes.function
+// }
 
 export default connect(mapState, mapDispatch)(InstructorPage)
