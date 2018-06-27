@@ -639,7 +639,10 @@ var Review = function (_Component) {
 
   _createClass(Review, [{
     key: 'componentDidUpdate',
-    value: function componentDidUpdate(nextProps) {}
+    value: function componentDidUpdate(nextProps) {
+      console.log('CHANGE IN PROPS');
+      // this.setState({reviews: nextProps})
+    }
   }, {
     key: 'render',
     value: function render() {
@@ -980,7 +983,7 @@ exports.default = store;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getAllInstructorsThunk = exports.addInstructorThunk = exports.getInstructorThunk = undefined;
+exports.addReviewThunk = exports.getAllInstructorsThunk = exports.addInstructorThunk = exports.getInstructorThunk = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -995,6 +998,8 @@ exports.default = function () {
       return { instructors: [].concat(_toConsumableArray(state.instructors), [action.instructor]) };
     case GET_ALL_INSTRUCTORS:
       return { instructors: action.instructors };
+    case ADD_REVIEW:
+      return _extends({}, state, { currentInstructor: { reviews: [].concat(_toConsumableArray(state.currentInstructor.reviews), [action.review]) } });
     default:
       return state;
   }
@@ -1016,6 +1021,7 @@ var initialState = {
 };var ADD_INSTRUCTOR = 'ADD_INSTRUCTOR';
 var GET_INSTRUCTOR = 'GET_INSTRUCTOR';
 var GET_ALL_INSTRUCTORS = 'GET_ALL_INSTRUCTORS';
+var ADD_REVIEW = 'ADD_REVIEW';
 
 //action creators
 var addInstructor = function addInstructor(instructor) {
@@ -1036,6 +1042,13 @@ var getAllInstructors = function getAllInstructors(instructors) {
   return {
     type: GET_ALL_INSTRUCTORS,
     instructors: instructors
+  };
+};
+
+var addReview = function addReview(review) {
+  return {
+    type: ADD_REVIEW,
+    review: review
   };
 };
 
@@ -1068,6 +1081,16 @@ var getAllInstructorsThunk = exports.getAllInstructorsThunk = function getAllIns
   };
 };
 
+var addReviewThunk = exports.addReviewThunk = function addReviewThunk(reviewObj) {
+  return function (dispatch) {
+    return _axios2.default.post('/api/review', reviewObj).then(function (review) {
+      dispatch(addReview(review.data));
+    }).catch(function (err) {
+      return console.log(err);
+    });
+  };
+};
+
 /***/ }),
 
 /***/ "./client/store/review.js":
@@ -1083,7 +1106,7 @@ var getAllInstructorsThunk = exports.getAllInstructorsThunk = function getAllIns
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addReviewThunk = exports.getAllReviewsThunk = undefined;
+exports.getAllReviewsThunk = undefined;
 
 exports.default = function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
@@ -1137,15 +1160,12 @@ var getAllReviewsThunk = exports.getAllReviewsThunk = function getAllReviewsThun
   };
 };
 
-var addReviewThunk = exports.addReviewThunk = function addReviewThunk(reviewObj) {
-  return function (dispatch) {
-    return _axios2.default.post('/api/review', reviewObj).then(function (review) {
-      dispatch(addReview(review.data));
-    }).catch(function (err) {
-      return console.log(err);
-    });
-  };
-};
+// export const addReviewThunk = (reviewObj) => 
+//   dispatch => 
+//     axios.post('/api/review', reviewObj)
+//       .then(review => {
+//         dispatch(addReview(review.data))})
+//       .catch(err => console.log(err))
 
 /***/ }),
 

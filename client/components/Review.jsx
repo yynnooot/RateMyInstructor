@@ -9,7 +9,8 @@ class Review extends Component {
     }
   }
   componentDidUpdate(nextProps){
-
+    console.log('CHANGE IN PROPS')
+    // this.setState({reviews: nextProps})
   }
   render(){
     return (

@@ -9,6 +9,7 @@ const initialState = {
 const ADD_INSTRUCTOR = 'ADD_INSTRUCTOR';
 const GET_INSTRUCTOR = 'GET_INSTRUCTOR';
 const GET_ALL_INSTRUCTORS = 'GET_ALL_INSTRUCTORS';
+const ADD_REVIEW = 'ADD_REVIEW';
 
 //action creators
 const addInstructor = (instructor) => ({
@@ -24,6 +25,11 @@ const getInstructor = (instructor) => ({
 const getAllInstructors = (instructors) => ({
   type: GET_ALL_INSTRUCTORS,
   instructors
+})
+
+const addReview = (review) => ({
+  type: ADD_REVIEW,
+  review
 })
 
 //thunk creator
@@ -50,7 +56,14 @@ export const getAllInstructorsThunk = () =>
       })
       .catch(err => console.log(err))
 
-export default function (state = initialState, action){
+export const addReviewThunk = (reviewObj) => 
+  dispatch => 
+    axios.post('/api/review', reviewObj)
+      .then(review => {
+        dispatch(addReview(review.data))})
+      .catch(err => console.log(err))
+
+      export default function (state = initialState, action){
   switch (action.type) {
     case GET_INSTRUCTOR:
       return { ...state, currentInstructor: action.instructor}
@@ -58,6 +71,8 @@ export default function (state = initialState, action){
       return { instructors: [...state.instructors, action.instructor] }
     case GET_ALL_INSTRUCTORS:
       return { instructors: action.instructors }
+    case ADD_REVIEW:
+      return { ...state,  currentInstructor: {reviews: [...state.currentInstructor.reviews, action.review]}}
     default:
       return state
   }
