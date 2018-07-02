@@ -13,16 +13,17 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) { 
+  console.log('REQ.USER:', req.user)
   const newReview = new Review({
     rating: req.body.rating,
-    author: req.session.userId,
+    author: req.user.id,
     instructor: req.body.instructorId
   })
   newReview.save()
   .then(review => {
 
     // add review id to User model
-    User.findById(req.session.userId, function(err, user){
+    User.findById(req.user.id, function(err, user){
       if(err) return res.send(err)
       user.reviews.push(review._id)
       user.save(function(err){

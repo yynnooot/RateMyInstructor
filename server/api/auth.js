@@ -12,11 +12,13 @@ const LINKEDIN_CLIENT_SECRET = process.env.clientSecret;
 const CALLBACK_URL = process.env.callbackURL;
 
 passport.serializeUser(function(user, done) {
-  done(null, user);
+  done(null, user.id);
 });
 
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
+passport.deserializeUser(function(id, done) {
+  User.findById(id).then((user)=> {
+    done(null, user);
+  })
 });
 
 // Use the LinkedinStrategy within Passport.
@@ -33,7 +35,6 @@ passport.use(new LinkedinStrategy({
 function(req, accessToken, refreshToken, profile, done) {
   // asynchronous verification, for effect...
   req.session.accessToken = accessToken;
-  console.log()
   process.nextTick(function () {
     // To keep the example simple, the user's Linkedin profile is returned to
     // represent the logged-in user.  In a typical application, you would want
@@ -46,15 +47,16 @@ function(req, accessToken, refreshToken, profile, done) {
         linkedinId: id,
         linkedinUrl: publicProfileUrl
       }
-      User.findOrCreate(props).then(user => {
-        //console.log('this is userID))))))))):',user.id)
-        req.session.userId = user.id
-        req.session.save();
-        console.log('______NEW SESSION FINDORCREATE:', req.session)
-      })
-
-
-      return done(null, profile);
+      User.findOrCreate(props)
+        .then(user => {
+          //console.log('this is userID))))))))):',user.id)
+          // req.session.userId = user.id
+          // req.session.save();
+          console.log('______USER:', user)
+          return done(null, user);
+        })
+        .catch(done)
+      
     }); 
   }
 ));
@@ -65,6 +67,7 @@ router.get('/', (req,res,next) => {
   console.log('HIT________________________________')
   res.json('HELLO')
 })
+
 router.get('/linkedin',
   passport.authenticate('linkedin', { state: 'SOME STATE' }),
   function(req, res){

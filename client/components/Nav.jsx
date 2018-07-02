@@ -5,6 +5,7 @@ const Nav = () =>
   (
     <div className='nav-container'>
       <h1><Link to={'/'}>RateMyInstructor</Link></h1>
+      <button>Sign-in with Linkedin</button>
     </div>
   )
 

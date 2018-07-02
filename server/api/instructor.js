@@ -14,6 +14,7 @@ router.get('/', function (req, res, next){
 })
 
 router.get('/:id', function (req, res, next) { 
+  console.log('THIS IS REQ:', req)
   Instructor.
     findById(req.params.id).
     populate('reviews').
@@ -21,7 +22,6 @@ router.get('/:id', function (req, res, next) {
       if(err){
         console.log(err)
       }else{
-        console.log('instructor in API:', instructor)
         res.json(instructor)
       }
     })
