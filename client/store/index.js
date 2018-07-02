@@ -5,9 +5,10 @@ import { createLogger } from 'redux-logger';
 import review from './review';
 import instructor from './instructor';
 
+
 const reducer = combineReducers({
   review,
-  instructor
+  instructor,
 })
 
 const store = createStore(

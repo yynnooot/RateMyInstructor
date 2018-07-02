@@ -87,4 +87,10 @@ router.get('/linkedin/callback',
   })
 );
 
+router.post('/logout', (req, res) => {
+  req.logout()
+  console.log('************req.user', req.user)
+  res.redirect('/')
+})
+
 module.exports = router;
