@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom';
+import { connect } from 'react-redux';
 import axios from 'axios';
 
 class Nav extends Component {
@@ -12,15 +13,23 @@ class Nav extends Component {
   }
 
   render(){
+    const { isLoggedIn } = this.props
     return(
-      <div className='nav-container'>
+      <nav className='nav-container'>
         <h1><Link to={'/'}>RateMyInstructor</Link></h1>
-        <button>Sign-in with Linkedin</button>
-        <button onClick={this.logout}>Logout</button>
-      </div>
+        { 
+          isLoggedIn ?
+            <button onClick={this.logout}>Logout</button>
+            : <button>Sign-in with Linkedin</button>
+        }
+      </nav>
     )
   }
 }
   
-
-export default Nav;
+const mapState = (state) => {
+  return {
+    isLoggedIn: !!state.user.id
+  }
+}
+export default connect(mapState, null)(Nav);

@@ -571,6 +571,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
 var _axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 var _axios2 = _interopRequireDefault(_axios);
@@ -601,8 +603,10 @@ var Nav = function (_Component) {
   _createClass(Nav, [{
     key: 'render',
     value: function render() {
+      var isLoggedIn = this.props.isLoggedIn;
+
       return _react2.default.createElement(
-        'div',
+        'nav',
         { className: 'nav-container' },
         _react2.default.createElement(
           'h1',
@@ -613,15 +617,14 @@ var Nav = function (_Component) {
             'RateMyInstructor'
           )
         ),
-        _react2.default.createElement(
-          'button',
-          null,
-          'Sign-in with Linkedin'
-        ),
-        _react2.default.createElement(
+        isLoggedIn ? _react2.default.createElement(
           'button',
           { onClick: this.logout },
           'Logout'
+        ) : _react2.default.createElement(
+          'button',
+          null,
+          'Sign-in with Linkedin'
         )
       );
     }
@@ -630,7 +633,12 @@ var Nav = function (_Component) {
   return Nav;
 }(_react.Component);
 
-exports.default = Nav;
+var mapState = function mapState(state) {
+  return {
+    isLoggedIn: !!state.user.id
+  };
+};
+exports.default = (0, _reactRedux.connect)(mapState, null)(Nav);
 
 /***/ }),
 
@@ -988,6 +996,18 @@ Object.keys(_instructor).forEach(function (key) {
   });
 });
 
+var _user = __webpack_require__(/*! ./user */ "./client/store/user.js");
+
+Object.keys(_user).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _user[key];
+    }
+  });
+});
+
 var _redux = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 
 var _reduxThunk = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/lib/index.js");
@@ -1000,11 +1020,14 @@ var _review2 = _interopRequireDefault(_review);
 
 var _instructor2 = _interopRequireDefault(_instructor);
 
+var _user2 = _interopRequireDefault(_user);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var reducer = (0, _redux.combineReducers)({
   review: _review2.default,
-  instructor: _instructor2.default
+  instructor: _instructor2.default,
+  user: _user2.default
 });
 
 var store = (0, _redux.createStore)(reducer, (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger.createLogger)()));
@@ -1209,6 +1232,74 @@ var getAllReviewsThunk = exports.getAllReviewsThunk = function getAllReviewsThun
 //       .then(review => {
 //         dispatch(addReview(review.data))})
 //       .catch(err => console.log(err))
+
+/***/ }),
+
+/***/ "./client/store/user.js":
+/*!******************************!*\
+  !*** ./client/store/user.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getUserThunk = undefined;
+
+exports.default = function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultUser;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case GET_USER:
+      return action.user;
+    case REMOVE_USER:
+      return defaultUser;
+    default:
+      return state;
+  }
+};
+
+var _axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var defaultUser = {};
+
+//action type
+var GET_USER = 'GET_USER';
+var REMOVE_USER = 'REMOVE_USER';
+
+//action creator
+var getUser = function getUser(user) {
+  return {
+    type: GET_USER,
+    user: user
+  };
+};
+
+var removeUser = function removeUser() {
+  return {
+    type: REMOVE_USER
+  };
+};
+
+//thunk creators
+var getUserThunk = exports.getUserThunk = function getUserThunk() {
+  return function (dispatch) {
+    return _axios2.default.get('/api/auth/me').then(function (res) {
+      return dispatch(getUser(res.data || defaultUser));
+    }).catch(function (err) {
+      return console.log(err);
+    });
+  };
+};
 
 /***/ }),
 

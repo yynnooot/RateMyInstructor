@@ -64,7 +64,7 @@ function(req, accessToken, refreshToken, profile, done) {
 // .../api/auth
 
 router.get('/', (req,res,next) => {
-  console.log('HIT________________________________')
+  console.log('hit / route')
   res.json('HELLO')
 })
 
@@ -86,6 +86,10 @@ router.get('/linkedin/callback',
     failureRedirect: '/'
   })
 );
+
+router.get('/me', (req, res) => {
+  res.json(req.user)
+})
 
 router.post('/logout', (req, res) => {
   req.logout()
