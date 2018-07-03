@@ -508,7 +508,7 @@ var Instructors = function (_Component) {
           'Instructors component:'
         ),
         this.props.instructors.length > 0 ? this.props.instructors.map(function (instructor, idx) {
-          console.log('instructor:', instructor);
+          {/* console.log('instructor:',instructor) */}
           return _react2.default.createElement(
             'div',
             { key: idx },
@@ -577,6 +577,8 @@ var _axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _store = __webpack_require__(/*! ../store */ "./client/store/index.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -591,19 +593,19 @@ var Nav = function (_Component) {
   function Nav(props) {
     _classCallCheck(this, Nav);
 
-    var _this = _possibleConstructorReturn(this, (Nav.__proto__ || Object.getPrototypeOf(Nav)).call(this, props));
-
-    _this.logout = function () {
-      _axios2.default.post('/api/auth/logout');
-    };
-
-    return _this;
+    return _possibleConstructorReturn(this, (Nav.__proto__ || Object.getPrototypeOf(Nav)).call(this, props));
   }
+
+  // logout = () => {
+  //   axios.post('/api/auth/logout')
+  // }
 
   _createClass(Nav, [{
     key: 'render',
     value: function render() {
-      var isLoggedIn = this.props.isLoggedIn;
+      var _props = this.props,
+          isLoggedIn = _props.isLoggedIn,
+          logout = _props.logout;
 
       return _react2.default.createElement(
         'nav',
@@ -619,12 +621,17 @@ var Nav = function (_Component) {
         ),
         isLoggedIn ? _react2.default.createElement(
           'button',
-          { onClick: this.logout },
+          { onClick: this.props.logout },
           'Logout'
         ) : _react2.default.createElement(
           'button',
           null,
           'Sign-in with Linkedin'
+        ),
+        _react2.default.createElement(
+          'button',
+          { onClick: logout },
+          'Logout'
         )
       );
     }
@@ -638,7 +645,14 @@ var mapState = function mapState(state) {
     isLoggedIn: !!state.user.id
   };
 };
-exports.default = (0, _reactRedux.connect)(mapState, null)(Nav);
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    logout: function logout() {
+      return dispatch((0, _store.removeUserThunk)());
+    }
+  };
+};
+exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(Nav);
 
 /***/ }),
 
@@ -1248,7 +1262,7 @@ var getAllReviewsThunk = exports.getAllReviewsThunk = function getAllReviewsThun
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getUserThunk = undefined;
+exports.removeUserThunk = exports.getUserThunk = undefined;
 
 exports.default = function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultUser;
@@ -1295,6 +1309,16 @@ var getUserThunk = exports.getUserThunk = function getUserThunk() {
   return function (dispatch) {
     return _axios2.default.get('/api/auth/me').then(function (res) {
       return dispatch(getUser(res.data || defaultUser));
+    }).catch(function (err) {
+      return console.log(err);
+    });
+  };
+};
+
+var removeUserThunk = exports.removeUserThunk = function removeUserThunk() {
+  return function (dispatch) {
+    return _axios2.default.post('/api/auth/logout').then(function () {
+      dispatch(removeUser());
     }).catch(function (err) {
       return console.log(err);
     });
