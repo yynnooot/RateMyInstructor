@@ -17,14 +17,24 @@ const removeUser = () => ({
 })
 
 //thunk creators
-export const getUserThunk = () => 
+
+export const auth = () => 
+  dispatch =>
+    axios.get('api/auth/linkedin')
+      .then(res => {
+        console.log('THIS IS RES:',res)
+        dispatch(getUser(res.data))}
+      )
+      .catch(err => console.log(err))
+
+export const me = () => 
   dispatch =>
     axios.get('/api/auth/me')
       .then(res => 
         dispatch(getUser(res.data || defaultUser)))
       .catch(err => console.log(err))
 
-export const removeUserThunk = () => 
+export const logout = () => 
   dispatch =>
     axios.post('/api/auth/logout')
       .then(() => {

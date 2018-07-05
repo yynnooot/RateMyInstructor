@@ -596,10 +596,6 @@ var Nav = function (_Component) {
     return _possibleConstructorReturn(this, (Nav.__proto__ || Object.getPrototypeOf(Nav)).call(this, props));
   }
 
-  // logout = () => {
-  //   axios.post('/api/auth/logout')
-  // }
-
   _createClass(Nav, [{
     key: 'render',
     value: function render() {
@@ -621,17 +617,12 @@ var Nav = function (_Component) {
         ),
         isLoggedIn ? _react2.default.createElement(
           'button',
-          { onClick: this.props.logout },
+          { onClick: logout },
           'Logout'
         ) : _react2.default.createElement(
           'button',
           null,
           'Sign-in with Linkedin'
-        ),
-        _react2.default.createElement(
-          'button',
-          { onClick: logout },
-          'Logout'
         )
       );
     }
@@ -648,7 +639,7 @@ var mapState = function mapState(state) {
 var mapDispatch = function mapDispatch(dispatch) {
   return {
     logout: function logout() {
-      return dispatch((0, _store.removeUserThunk)());
+      return dispatch((0, _store.logout)());
     }
   };
 };
@@ -864,16 +855,9 @@ var ReviewForm = function (_Component) {
             )
           ),
           _react2.default.createElement(
-            'a',
-            {
-              target: '_self',
-              href: '/api/auth/linkedin',
-              className: '' },
-            _react2.default.createElement(
-              'span',
-              null,
-              'Linkedin'
-            )
+            'button',
+            { onClick: this.props.linkedIn },
+            'Log In With Linkedin'
           ),
           _react2.default.createElement('input', { type: 'submit', value: 'Send' })
         )
@@ -892,6 +876,9 @@ var mapDispatch = function mapDispatch(dispatch) {
   return {
     addReview: function addReview(review) {
       return dispatch((0, _store.addReviewThunk)(review));
+    },
+    linkedIn: function linkedIn() {
+      return dispatch((0, _store.auth)());
     }
   };
 };
@@ -1262,7 +1249,7 @@ var getAllReviewsThunk = exports.getAllReviewsThunk = function getAllReviewsThun
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.removeUserThunk = exports.getUserThunk = undefined;
+exports.logout = exports.me = exports.auth = undefined;
 
 exports.default = function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultUser;
@@ -1305,7 +1292,19 @@ var removeUser = function removeUser() {
 };
 
 //thunk creators
-var getUserThunk = exports.getUserThunk = function getUserThunk() {
+
+var auth = exports.auth = function auth() {
+  return function (dispatch) {
+    return _axios2.default.get('api/auth/linkedin').then(function (res) {
+      console.log('THIS IS RES:', res);
+      dispatch(getUser(res.data));
+    }).catch(function (err) {
+      return console.log(err);
+    });
+  };
+};
+
+var me = exports.me = function me() {
   return function (dispatch) {
     return _axios2.default.get('/api/auth/me').then(function (res) {
       return dispatch(getUser(res.data || defaultUser));
@@ -1315,7 +1314,7 @@ var getUserThunk = exports.getUserThunk = function getUserThunk() {
   };
 };
 
-var removeUserThunk = exports.removeUserThunk = function removeUserThunk() {
+var logout = exports.logout = function logout() {
   return function (dispatch) {
     return _axios2.default.post('/api/auth/logout').then(function () {
       dispatch(removeUser());

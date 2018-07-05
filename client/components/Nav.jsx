@@ -3,16 +3,12 @@ import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
-import { removeUserThunk } from '../store';
+import { logout } from '../store';
 
 class Nav extends Component {
   constructor(props){
     super(props)
   }
-
-  // logout = () => {
-  //   axios.post('/api/auth/logout')
-  // }
 
   render(){
     const { isLoggedIn, logout } = this.props
@@ -21,10 +17,10 @@ class Nav extends Component {
         <h1><Link to={'/'}>RateMyInstructor</Link></h1>
         { 
           isLoggedIn ?
-            <button onClick={this.props.logout}>Logout</button>
+            <button onClick={logout}>Logout</button>
             : <button>Sign-in with Linkedin</button>
         }
-        <button onClick={logout}>Logout</button>
+        
       </nav>
     )
   }
@@ -37,7 +33,7 @@ const mapState = (state) => {
 }
 const mapDispatch = (dispatch) => {
   return {
-    logout: () => dispatch(removeUserThunk())
+    logout: () => dispatch(logout())
   }
 }
 export default connect(mapState, mapDispatch)(Nav);
