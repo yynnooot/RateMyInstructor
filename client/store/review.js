@@ -23,12 +23,7 @@ export const getAllReviewsThunk = () =>
       dispatch(getAllReviews(reviews.data)))
     .catch(err => console.log(err))
 
-// export const addReviewThunk = (reviewObj) => 
-//   dispatch => 
-//     axios.post('/api/review', reviewObj)
-//       .then(review => {
-//         dispatch(addReview(review.data))})
-//       .catch(err => console.log(err))
+// adding review thunk is in store/instructor.js
 
 
 export default function (state = initialState, action){

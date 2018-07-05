@@ -142,6 +142,10 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _store = __webpack_require__(/*! ../store */ "./client/store/index.js");
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
 var _Instructors = __webpack_require__(/*! ./Instructors.jsx */ "./client/components/Instructors.jsx");
 
 var _Instructors2 = _interopRequireDefault(_Instructors);
@@ -164,8 +168,17 @@ var Home = function (_Component) {
   }
 
   _createClass(Home, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      console.log('COMPONENT MOUNT IN HOME');
+      this.props.checkUser();
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var isLoggedIn = this.props.isLoggedIn;
+
+      console.log('THIS IS LOGGEDIN IN HOME:', isLoggedIn);
       return _react2.default.createElement(
         'div',
         null,
@@ -177,7 +190,14 @@ var Home = function (_Component) {
   return Home;
 }(_react.Component);
 
-exports.default = Home;
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    checkUser: function checkUser() {
+      return dispatch((0, _store.me)());
+    }
+  };
+};
+exports.default = (0, _reactRedux.connect)(null, mapDispatch)(Home);
 
 /***/ }),
 
@@ -633,7 +653,7 @@ var Nav = function (_Component) {
 
 var mapState = function mapState(state) {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user._id
   };
 };
 var mapDispatch = function mapDispatch(dispatch) {
@@ -643,6 +663,7 @@ var mapDispatch = function mapDispatch(dispatch) {
     }
   };
 };
+
 exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(Nav);
 
 /***/ }),
@@ -855,9 +876,16 @@ var ReviewForm = function (_Component) {
             )
           ),
           _react2.default.createElement(
-            'button',
-            { onClick: this.props.linkedIn },
-            'Log In With Linkedin'
+            'a',
+            {
+              target: '_self',
+              href: '/api/auth/linkedin',
+              className: '' },
+            _react2.default.createElement(
+              'span',
+              null,
+              'Linkedin'
+            )
           ),
           _react2.default.createElement('input', { type: 'submit', value: 'Send' })
         )
@@ -876,9 +904,6 @@ var mapDispatch = function mapDispatch(dispatch) {
   return {
     addReview: function addReview(review) {
       return dispatch((0, _store.addReviewThunk)(review));
-    },
-    linkedIn: function linkedIn() {
-      return dispatch((0, _store.auth)());
     }
   };
 };
@@ -1227,12 +1252,7 @@ var getAllReviewsThunk = exports.getAllReviewsThunk = function getAllReviewsThun
   };
 };
 
-// export const addReviewThunk = (reviewObj) => 
-//   dispatch => 
-//     axios.post('/api/review', reviewObj)
-//       .then(review => {
-//         dispatch(addReview(review.data))})
-//       .catch(err => console.log(err))
+// adding review thunk is in store/instructor.js
 
 /***/ }),
 
@@ -1249,7 +1269,7 @@ var getAllReviewsThunk = exports.getAllReviewsThunk = function getAllReviewsThun
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.logout = exports.me = exports.auth = undefined;
+exports.logout = exports.me = undefined;
 
 exports.default = function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultUser;
@@ -1293,21 +1313,11 @@ var removeUser = function removeUser() {
 
 //thunk creators
 
-var auth = exports.auth = function auth() {
-  return function (dispatch) {
-    return _axios2.default.get('api/auth/linkedin').then(function (res) {
-      console.log('THIS IS RES:', res);
-      dispatch(getUser(res.data));
-    }).catch(function (err) {
-      return console.log(err);
-    });
-  };
-};
-
 var me = exports.me = function me() {
   return function (dispatch) {
     return _axios2.default.get('/api/auth/me').then(function (res) {
-      return dispatch(getUser(res.data || defaultUser));
+      console.log('HIT ME ROUTE ______________');
+      dispatch(getUser(res.data || defaultUser));
     }).catch(function (err) {
       return console.log(err);
     });

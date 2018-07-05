@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import {Link} from 'react-router-dom';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -26,14 +26,12 @@ class Nav extends Component {
   }
 }
   
-const mapState = (state) => {
-  return {
-    isLoggedIn: !!state.user.id
+const mapState = (state) => ({
+    isLoggedIn: !!state.user._id
   }
-}
-const mapDispatch = (dispatch) => {
-  return {
+)
+const mapDispatch = (dispatch) => ({
     logout: () => dispatch(logout())
-  }
-}
+  })
+
 export default connect(mapState, mapDispatch)(Nav);

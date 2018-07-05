@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { addReviewThunk, auth } from '../store';
+import { addReviewThunk } from '../store';
 
 class ReviewForm extends Component {
   constructor(props){
@@ -41,14 +41,15 @@ class ReviewForm extends Component {
             </select>
             {/* <input type="text" name="rating" required/> */}
           </div>
-          {/* <a
+          <a
               target="_self"
               href="/api/auth/linkedin"
               className="">
               <span>Linkedin</span>
-            </a> */}
-          <button onClick={this.props.linkedIn}>Log In With Linkedin</button>
+            </a>
+          
           <input type="submit" value="Send"/>
+          
           </form>
       </div>
     )
@@ -60,8 +61,7 @@ ReviewForm.propTypes = {
 }
 
 const mapDispatch = (dispatch) => ({
-  addReview: (review) => dispatch(addReviewThunk(review)),
-  linkedIn: () => dispatch(auth())
+  addReview: (review) => dispatch(addReviewThunk(review))
 })
 
 
