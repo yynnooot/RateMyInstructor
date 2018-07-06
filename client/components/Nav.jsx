@@ -18,7 +18,7 @@ class Nav extends Component {
         { 
           isLoggedIn ?
             <button onClick={logout}>Logout</button>
-            : <button>Sign-in with Linkedin</button>
+            : <a href="/api/auth/linkedin">Sign-in with Linkedin</a>
         }
         
       </nav>

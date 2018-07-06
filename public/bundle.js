@@ -640,8 +640,8 @@ var Nav = function (_Component) {
           { onClick: logout },
           'Logout'
         ) : _react2.default.createElement(
-          'button',
-          null,
+          'a',
+          { href: '/api/auth/linkedin' },
           'Sign-in with Linkedin'
         )
       );
